@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { productsApi } from "../../api/products.api";
 import { ROUTES } from "../../constants/routes";
 import Button from "../../components/ui/Button";
 import { useReveal } from "../../hooks/useReveal";
@@ -36,16 +34,9 @@ const STORY_PANELS = [
 const CATEGORIES = ["Biker", "4 Wheelers", "Jackets", "Safety Vests", "Safety Shoes", "Helmets"];
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
   const { ref: storyRef, isVisible: storyVisible } = useReveal({ threshold: 0.1 });
   const { ref: quoteRef, isVisible: quoteVisible } = useReveal({ threshold: 0.3 });
 
-  useEffect(() => {
-    productsApi
-      .getProducts({ limit: 8, sort: "newest" })
-      .then(({ data }) => setProducts(data.data))
-      .catch(() => setProducts([]));
-  }, []);
 
   return (
     <div className="bg-white">

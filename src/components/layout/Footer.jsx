@@ -16,9 +16,9 @@ const Footer = () => (
           </p>
 
           <div className="py-2">
-            <a href="" aria-label="Facebook" className="px-2"> <FontAwesomeIcon icon={faFacebook} color="#1877F2" /> </a>
-            <a href="" aria-label="Instagram" className="px-2"> <FontAwesomeIcon icon={faInstagram} color="#E4405F" /></a>
-            <a href="" aria-label="Tiktok" className="px-2"><FontAwesomeIcon icon={faWhatsapp} color="#25D366" /></a>
+            <a href="https://facebook.com/YOUR_PAGE" aria-label="Facebook" className="px-2"> <FontAwesomeIcon icon={faFacebook} color="#1877F2" /> </a>
+            <a href="https://instagram.com/YOUR_PAGE" aria-label="Instagram" className="px-2"> <FontAwesomeIcon icon={faInstagram} color="#E4405F" /></a>
+            <a href="https://wa.me/YOUR_NUMBER" aria-label="WhatsApp" className="px-2"><FontAwesomeIcon icon={faWhatsapp} color="#25D366" /></a>
           </div>
         </div>
         <div>
