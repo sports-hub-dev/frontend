@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-body text-ink bg-paper antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  ::selection {
+    @apply bg-amber-200 text-navy-900;
+  }
+  :focus-visible {
+    outline: 2px solid #F2A93B;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Manifest-style dashed divider — signature motif used across order/shipping UI */
+  .manifest-rule {
+    border-top: 1.5px dashed theme("colors.navy.200");
+  }
+
+  .tracking-code {
+    @apply font-mono tracking-wide uppercase;
+  }
+
+  .stamp {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide;
+  }
+
+  .btn-transition {
+    @apply transition-all duration-200 ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Page transition wrapper */
+.page-enter {
+  animation: pageFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes pageFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Skeleton shimmer base (used alongside react-loading-skeleton) */
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #EEF1F7 25%, #F7F6F2 37%, #EEF1F7 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.6s ease infinite;
+}
