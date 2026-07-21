@@ -35,10 +35,10 @@ const About = () => {
       <section className="bg-navy-900 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <span className="stamp bg-amber/15 text-amber ring-1 ring-inset ring-amber/30">Who We Are</span>
-          <h1 className="mt-5 animate-fadeUp font-display text-3xl font-bold text-white sm:text-4xl">
+          <h1 className="mt-5 animate-fadeUp font-display text-2xl font-bold text-white sm:text-4xl">
             Personal protective equipment, purpose-built for delivery.
           </h1>
-          <p className="mt-5 animate-fadeUp text-base leading-relaxed text-navy-200" style={{ animationDelay: "80ms" }}>
+          <p className="mt-5 animate-fadeUp text-sm leading-relaxed text-navy-200 sm:text-base" style={{ animationDelay: "80ms" }}>
             Sports Hub specializes in delivering high-performance personal protective equipment (PPE) and uniforms to
             fulfil the specific needs of demanding environments. Our regional capabilities span Egypt, Saudi Arabia,
             and the United Arab Emirates (UAE) — manufactured and owned by controlled warehousing, ensuring a
@@ -73,13 +73,11 @@ const About = () => {
           {PRODUCT_LINES.map((line, i) => (
             <div
               key={line.name}
-              className={`rounded-2xl border border-navy-100 bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift ${
-                lineVisible ? "animate-fadeUp" : "opacity-0"
-              }`}
+              className={`rounded-2xl border border-navy-100 bg-white p-6 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift sm:text-left ${lineVisible ? "animate-fadeUp" : "opacity-0"}`}
               style={{ animationDelay: `${i * 70}ms` }}
             >
-              <h3 className="font-display text-base font-semibold text-navy-900">{line.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-navy-500">{line.detail}</p>
+              <h3 className="font-display text-sm font-semibold text-navy-900 sm:text-base">{line.name}</h3>
+              <p className="mt-2 text-xs leading-relaxed text-navy-500 sm:text-sm">{line.detail}</p>
             </div>
           ))}
         </div>
@@ -100,9 +98,7 @@ const About = () => {
             {COVERAGE.map((c, i) => (
               <div
                 key={c.country}
-                className={`flex flex-col justify-between gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-4 sm:flex-row sm:items-center ${
-                  coverageVisible ? "animate-fadeUp" : "opacity-0"
-                }`}
+                className={`flex flex-col justify-between gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-center sm:flex-row sm:items-center sm:text-left ${coverageVisible ? "animate-fadeUp" : "opacity-0"}`}
                 style={{ animationDelay: `${i * 90}ms` }}
               >
                 <div>
@@ -117,7 +113,7 @@ const About = () => {
       </section>
 
       {/* Lead time / development */}
-      <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+      <section className="text-center mx-auto max-w-5xl px-4 py-16 sm:px-6">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
           <div>
             <h3 className="font-display text-base font-semibold text-navy-900">Swift Turnaround</h3>

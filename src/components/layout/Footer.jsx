@@ -9,15 +9,15 @@ const Footer = () => (
   <footer className="border-t border-navy-100 bg-navy-900">
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-        <div className="col-span-2 md:col-span-1">
-          <Logo dark className="mb-3" />
+        <div className="col-span-2 text-center md:col-span-1 md:text-left">
+          <Logo dark className="mb-3 justify-center md:justify-start" />
           <p className="text-sm leading-relaxed text-navy-300">
             Uniforms and PPE for Egypt's delivery and logistics workforce — built for the road, priced in EGP.
           </p>
 
           <div className="py-2">
-            <a href="https://facebook.com/YOUR_PAGE" aria-label="Facebook" className="px-2"> <FontAwesomeIcon icon={faFacebook} color="#1877F2" /> </a>
-            <a href="https://instagram.com/YOUR_PAGE" aria-label="Instagram" className="px-2"> <FontAwesomeIcon icon={faInstagram} color="#E4405F" /></a>
+            <a href="https://www.facebook.com/share/19VJ1aW813/?mibextid=wwXIfr" aria-label="Facebook" className="px-2"> <FontAwesomeIcon icon={faFacebook} color="#1877F2" /> </a>
+            <a href="https://www.instagram.com/sportshubegypt/" aria-label="Instagram" className="px-2"> <FontAwesomeIcon icon={faInstagram} color="#E4405F" /></a>
             <a href="https://wa.me/YOUR_NUMBER" aria-label="WhatsApp" className="px-2"><FontAwesomeIcon icon={faWhatsapp} color="#25D366" /></a>
           </div>
         </div>
@@ -38,7 +38,7 @@ const Footer = () => (
             <li><Link className="transition-colors hover:text-white" to={ROUTES.REGISTER}>Create an Account</Link></li>
           </ul>
         </div>
-        <div>
+        <div className="hidden md:block">
           <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-amber">Coverage</h4>
           <ul className="space-y-2 text-sm text-navy-300">
             <li>Egypt</li>
