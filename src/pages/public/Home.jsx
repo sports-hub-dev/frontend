@@ -44,18 +44,18 @@ const Home = () => {
         <HeroCarousel images={HERO_IMAGES} />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-ink via-navy-ink/50 to-navy-ink/10" />
 
-        <div className="relative mx-auto w-full max-w-6xl px-6 pb-16 pt-40 sm:px-8 sm:pb-24">
-          <p className="animate-fadeUp text-xs font-medium uppercase tracking-[0.25em] text-white">
+        <div className="relative mx-auto w-full max-w-6xl px-6 pb-16 pt-40 text-center sm:px-8 sm:pb-24 sm:text-left">
+          <p className="animate-fadeUp text-xs font-medium uppercase tracking-[0.25em] text-white mx-auto sm:mx-0">
             Sports Hub Collection
           </p>
-          <h1 className="mt-6 max-w-3xl animate-fadeUp font-editorial text-5xl font-normal italic leading-[1.05] text-white sm:text-6xl md:text-7xl" style={{ animationDelay: "80ms" }}>
+          <h1 className="mt-6 max-w-3xl animate-fadeUp font-editorial text-3xl font-normal italic leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl mx-auto sm:mx-0" style={{ animationDelay: "80ms" }}>
             Built like performance wear.
           </h1>
-          <p className="mt-6 max-w-lg animate-fadeUp text-base leading-relaxed text-navy-100/90" style={{ animationDelay: "160ms" }}>
+          <p className="mt-6 max-w-lg animate-fadeUp text-sm leading-relaxed text-navy-100/90 sm:text-base mx-auto sm:mx-0" style={{ animationDelay: "160ms" }}>
             Uniforms and PPE for Egypt's delivery and logistics workforce — designed for durability, visibility,
             and all-day comfort.
           </p>
-          <div className="mt-10 flex animate-fadeUp flex-wrap gap-4" style={{ animationDelay: "220ms" }}>
+          <div className="mt-10 flex animate-fadeUp flex-wrap justify-center gap-4 sm:justify-start" style={{ animationDelay: "220ms" }}>
             <Link to={ROUTES.PRODUCTS}>
               <Button variant="amber" size="lg">Explore the Collection</Button>
             </Link>
@@ -80,7 +80,7 @@ const Home = () => {
 
       {/* ── Minimal credibility strip ───────────────────────────────────── */}
       <section className="border-b border-navy-100 py-8">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6 text-center">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 text-center sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-10 sm:gap-y-3">
           {["Oeko-Tex 100 Certified", "EN ISO 20471 Compliant", "1-Month Lead Time", "Egypt · Saudi Arabia · UAE"].map((item, i) => (
             <span key={item} className="flex items-center gap-x-10">
               <span className="text-xs font-medium uppercase tracking-wide text-navy-400">{item}</span>
@@ -109,11 +109,11 @@ const Home = () => {
                   </div>
                 </div>
                 <div className={reversed ? "sm:order-1" : ""}>
-                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-amber-600">{panel.eyebrow}</p>
-                  <h3 className="mt-4 font-editorial text-3xl italic leading-tight text-navy-900 sm:text-4xl">
+                  <p className="text-center text-xs font-medium uppercase tracking-[0.2em] text-amber-600">{panel.eyebrow}</p>
+                  <h3 className="text-center mt-4 font-editorial text-3xl italic leading-tight text-navy-900 sm:text-4xl">
                     {panel.title}
                   </h3>
-                  <p className="mt-5 max-w-md text-base leading-relaxed text-navy-500">{panel.copy}</p>
+                  <p className="max-w-* text-center mt-5 max-w-md text-base leading-relaxed text-navy-500">{panel.copy}</p>
                 </div>
               </div>
             );
@@ -124,7 +124,7 @@ const Home = () => {
       {/* ── Pull statement ───────────────────────────────────────────────── */}
       <section ref={quoteRef} className="bg-navy-900 py-24 sm:py-32">
         <div className="mx-auto max-w-3xl px-6 text-center sm:px-8">
-          <p className={`font-editorial text-2xl italic leading-relaxed text-white sm:text-3xl ${quoteVisible ? "animate-fadeUp" : "opacity-0"}`}>
+          <p className={`font-editorial text-lg italic leading-relaxed text-white sm:text-2xl md:text-3xl ${quoteVisible ? "animate-fadeUp" : "opacity-0"}`}>
             "Every garment we send out is judged by the same standard — would it hold up on a real route, in real
             weather, for a full shift."
           </p>
@@ -159,9 +159,9 @@ const Home = () => {
           <p className="mt-4 text-base text-navy-500">
             Browse the full collection, or register your team as a DSP partner for vendor pricing and catalogue access.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link to={ROUTES.PRODUCTS}><Button size="lg">Explore the Collection</Button></Link>
-            <Link to={ROUTES.REGISTER_VENDOR}><Button variant="outline" size="lg">Register as a DSP</Button></Link>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link to={ROUTES.PRODUCTS} className="w-full sm:w-64"><Button size="lg" className="w-full">Explore the Collection</Button></Link>
+            <Link to={ROUTES.REGISTER_VENDOR} className="w-full sm:w-64"><Button variant="outline" size="lg" className="w-full">Register as a DSP</Button></Link>
           </div>
         </div>
       </section>
