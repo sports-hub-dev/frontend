@@ -51,7 +51,7 @@ const AdminContact = () => {
 
   return (
     <div>
-      <h1 className="mb-6 font-display text-2xl font-bold text-navy-900">Contact Messages</h1>
+      <h1 className="text-center mb-6 mt-6 font-display text-2xl font-bold text-navy-900">Contact Messages</h1>
       <div className="mb-5">
         <Select containerClassName="w-44" placeholder="All Messages" value={readFilter}
           onChange={(e) => { setPage(1); setReadFilter(e.target.value); }}

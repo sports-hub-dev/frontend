@@ -113,7 +113,7 @@ const Home = () => {
                   <h3 className="text-center mt-4 font-editorial text-3xl italic leading-tight text-navy-900 sm:text-4xl">
                     {panel.title}
                   </h3>
-                  <p className="max-w-* text-center mt-5 max-w-md text-base leading-relaxed text-navy-500">{panel.copy}</p>
+                  <p className="text-center mt-4 font-editorial max-w-* leading-relaxed text-navy-500">{panel.copy}</p>
                 </div>
               </div>
             );
