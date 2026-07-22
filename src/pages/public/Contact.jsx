@@ -56,11 +56,11 @@ const Contact = () => {
       </section>
 
       <section ref={detailsRef} className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="text-center grid grid-cols-1 gap-4 sm:grid-cols-3">
           {CONTACT_DETAILS.map((detail, i) => {
             const content = (
               <>
-                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-navy-50 text-navy-700">
+                <div className="mb-3 flex h-11 w-auto items-center justify-center rounded-full bg-navy-50 text-navy-700">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path d={detail.icon} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
