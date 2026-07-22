@@ -10,7 +10,7 @@ const Footer = () => (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
         <div className="col-span-2 text-center md:col-span-1 md:text-left">
-          <Logo dark className="mb-3 justify-center md:justify-start" />
+          <Logo dark className="mb-3 justify-center" />
           <p className="text-sm leading-relaxed text-navy-300">
             Uniforms and PPE for Egypt's delivery and logistics workforce — built for the road, priced in EGP.
           </p>
