@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "../../utils/cn";
 
 const EmptyState = ({ icon, title, description, action, className }) => (
-  <div className={cn("mb-5 mr-5 flex flex-col items-center justify-center rounded-2xl border border-dashed border-navy-200 bg-white/60 px-6 py-16 text-center animate-fadeIn", className)}>
+  <div className={cn("mb-5 mr-5 ml-5 flex flex-col items-center justify-center rounded-2xl border border-dashed border-navy-200 bg-white/60 px-6 py-16 text-center animate-fadeIn", className)}>
     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-navy-50 text-navy-400">
       {icon || (
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
