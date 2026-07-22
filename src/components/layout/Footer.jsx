@@ -21,7 +21,7 @@ const Footer = () => (
             <a href="https://wa.me/YOUR_NUMBER" aria-label="WhatsApp" className="px-2"><FontAwesomeIcon icon={faWhatsapp} color="#25D366" /></a>
           </div>
         </div>
-        <div>
+        <div className="text-center">
           <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-amber">Shop</h4>
           <ul className="space-y-2 text-sm text-navy-300">
             <li><Link className="transition-colors hover:text-white" to={ROUTES.PRODUCTS}>All Products</Link></li>
@@ -29,7 +29,7 @@ const Footer = () => (
             <li><Link className="transition-colors hover:text-white" to={ROUTES.CART}>Your Cart</Link></li>
           </ul>
         </div>
-        <div>
+        <div className="text-center">
           <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-amber">Company</h4>
           <ul className="space-y-2 text-sm text-navy-300">
             <li><Link className="transition-colors hover:text-white" to={ROUTES.ABOUT}>About Us</Link></li>
@@ -38,7 +38,7 @@ const Footer = () => (
             <li><Link className="transition-colors hover:text-white" to={ROUTES.REGISTER}>Create an Account</Link></li>
           </ul>
         </div>
-        <div className="hidden md:block">
+        <div className="hidden md:block text-center">
           <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-amber">Coverage</h4>
           <ul className="space-y-2 text-sm text-navy-300">
             <li>Egypt</li>
