@@ -31,7 +31,7 @@ const STORY_PANELS = [
   },
 ];
 
-const CATEGORIES = ["Biker", "4 Wheelers", "Jackets", "Safety Vests", "Safety Shoes", "Helmets"];
+const CATEGORIES = ["T-Shirt", "Jackets", "Vest", "Safety Shoes", "Four Wheelers","Helmets"];
 
 const Home = () => {
   const { ref: storyRef, isVisible: storyVisible } = useReveal({ threshold: 0.1 });
