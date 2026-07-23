@@ -4,7 +4,7 @@ export const productsApi = {
   // Public
   getProducts: (params) => axiosInstance.get("/products", { params }),
   getProductById: (id) => axiosInstance.get(`/products/${id}`),
-
+  getCategories: () => axiosInstance.get("/products/categories"),
   // Admin
   adminGetProducts: (params) => axiosInstance.get("/products/admin/all", { params }),
   getInventoryLogs: (params) => axiosInstance.get("/products/admin/inventory-logs", { params }),

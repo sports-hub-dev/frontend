@@ -41,6 +41,32 @@ const Products = () => {
     [searchParams, setSearchParams]
   );
 
+  // useEffect(() => {
+  //   setLoading(true);
+  //   productsApi
+  //     .getProducts({ page, limit, category: category || undefined, minPrice: minPrice || undefined, maxPrice: maxPrice || undefined, sort })
+  //     .then(({ data }) => {
+  //       setProducts(data.data);
+  //       setMeta(data.meta);
+  //       // Derive the category filter list from whatever the API returns across the current result set
+  //       setCategories((prev) => {
+  //         const found = new Set(prev);
+  //         data.data.forEach((p) => found.add(p.category));
+  //         return Array.from(found).sort();
+  //       });
+  //     })
+  //     .catch(() => setProducts([]))
+  //     .finally(() => setLoading(false));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [page, limit, category, minPrice, maxPrice, sort]);
+
+  useEffect(() => {
+    productsApi
+      .getCategories()
+      .then(({ data }) => setCategories(data.data.categories))
+      .catch(() => setCategories([]));
+  }, []);
+
   useEffect(() => {
     setLoading(true);
     productsApi
@@ -48,12 +74,6 @@ const Products = () => {
       .then(({ data }) => {
         setProducts(data.data);
         setMeta(data.meta);
-        // Derive the category filter list from whatever the API returns across the current result set
-        setCategories((prev) => {
-          const found = new Set(prev);
-          data.data.forEach((p) => found.add(p.category));
-          return Array.from(found).sort();
-        });
       })
       .catch(() => setProducts([]))
       .finally(() => setLoading(false));
@@ -131,9 +151,8 @@ const Products = () => {
             onClick={() => setFiltersOpen(false)}
           />
           <div
-            className={`absolute inset-y-0 right-0 w-80 max-w-[85vw] overflow-y-auto bg-white p-6 shadow-lift transition-transform duration-300 ease-out ${
-              filtersOpen ? "translate-x-0" : "translate-x-full"
-            }`}
+            className={`absolute inset-y-0 right-0 w-80 max-w-[85vw] overflow-y-auto bg-white p-6 shadow-lift transition-transform duration-300 ease-out ${filtersOpen ? "translate-x-0" : "translate-x-full"
+              }`}
           >
             <div className="mb-5 flex items-center justify-between">
               <h3 className="font-display text-base font-semibold text-navy-900">Filters</h3>
