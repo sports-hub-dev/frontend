@@ -31,7 +31,7 @@ const STORY_PANELS = [
   },
 ];
 
-const CATEGORIES = ["T-Shirt", "Jackets", "Vest", "Safety Shoes", "Four Wheelers","Helmets"];
+const CATEGORIES = ["T-Shirt", "Jackets", "Vest", "Safety Shoes", "Four Wheelers", "Helmets"];
 
 const Home = () => {
   const { ref: storyRef, isVisible: storyVisible } = useReveal({ threshold: 0.1 });
@@ -55,12 +55,14 @@ const Home = () => {
             Uniforms and PPE for Egypt's delivery and logistics workforce — designed for durability, visibility,
             and all-day comfort.
           </p>
-          <div className="mt-10 flex animate-fadeUp flex-wrap justify-center gap-4 sm:justify-start" style={{ animationDelay: "220ms" }}>
-            <Link to={ROUTES.PRODUCTS}>
-              <Button variant="amber" size="lg">Explore the Collection</Button>
+          <div className="mt-10 flex animate-fadeUp flex-col items-center gap-4 sm:flex-row" style={{ animationDelay: "220ms" }}>
+            <Link to={ROUTES.PRODUCTS} className="w-full sm:w-64">
+              <Button variant="amber" size="lg" className="h-14 w-full">
+                Explore the Collection
+              </Button>
             </Link>
-            <Link to={ROUTES.REGISTER_VENDOR}>
-              <Button size="lg" className="border border-white/40 bg-transparent text-white hover:bg-white/10">
+            <Link to={ROUTES.REGISTER_VENDOR} className="w-full sm:w-64">
+              <Button size="lg" className="h-14 w-full border border-white/40 bg-transparent text-white hover:bg-white/10">
                 Become a DSP Partner
               </Button>
             </Link>
