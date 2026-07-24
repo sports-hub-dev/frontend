@@ -12,7 +12,7 @@ const Footer = () => (
         <div className="col-span-2 text-center md:col-span-1 md:text-left">
           <Logo dark className="mb-3 justify-center" />
           <p className="text-sm leading-relaxed text-navy-300">
-            Uniforms and PPE for Egypt's delivery and logistics workforce — built for the road, priced in EGP.
+            This website and its e-commerce operations are operated by Outfit Theory Readymade Garments Trading L.L.C S.O.C, a company legally registered in the UAE, trading under the Sportshub brand.
           </p>
 
           <div className="py-2">

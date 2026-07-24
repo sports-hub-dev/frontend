@@ -39,10 +39,9 @@ const About = () => {
             Personal protective equipment, purpose-built for delivery.
           </h1>
           <p className="mt-5 animate-fadeUp text-sm leading-relaxed text-navy-200 sm:text-base" style={{ animationDelay: "80ms" }}>
-            Sports Hub specializes in delivering high-performance personal protective equipment (PPE) and uniforms to
-            fulfil the specific needs of demanding environments. Our regional capabilities span Egypt, Saudi Arabia,
-            and the United Arab Emirates (UAE) — manufactured and owned by controlled warehousing, ensuring a
-            seamless and robust supply chain for Amazon's DSP operations.
+            Sportshub is the commercial brand used by Outfit Theory Readymade Garments Trading L.L.C S.O.C for its UAE e-commerce operations in uniforms, workwear and personal protective equipment.
+
+            Sports Hub specializes in delivering high-performance personal protective equipment (PPE) and uniforms to fulfil the specific needs of demanding environments. Our regional capabilities span Egypt, Saudi Arabia, and the United Arab Emirates (UAE) — manufactured and owned by controlled warehousing, ensuring a seamless and robust supply chain for Amazon's DSP operations.
           </p>
         </div>
       </section>
