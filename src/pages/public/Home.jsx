@@ -63,7 +63,7 @@ const Home = () => {
             </Link>
             <Link to={ROUTES.REGISTER_VENDOR} className="w-full sm:w-64">
               <Button size="lg" className="h-14 w-full border border-white/40 bg-transparent text-white hover:bg-white/10">
-                Become a DSP Partner
+                DSP Partner
               </Button>
             </Link>
           </div>
