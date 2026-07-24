@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
   return (
     <Link
       to={buildRoute(ROUTES.PRODUCT_DETAIL, { id: product._id })}
-      className="group block overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
     >
       <div className="relative aspect-square overflow-hidden bg-navy-50">
         <img
@@ -20,16 +20,18 @@ const ProductCard = ({ product }) => {
           className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
         {!product.isPublic && (
-          <span className="stamp absolute left-3 bottom-3 bg-navy-900/90 text-white backdrop-blur-sm">DSP Only</span>
+          <span className="stamp absolute left-3 top-3 bg-navy-900/90 text-white backdrop-blur-sm">DSP Only</span>
         )}
         <div className="absolute right-3 top-3">
           <StockBadge stock={stock} />
         </div>
       </div>
-      <div className="p-4">
+      <div className="flex flex-1 flex-col p-4">
         <p className="text-xs font-medium uppercase tracking-wide text-navy-400">{product.category}</p>
-        <h3 className="mt-1 line-clamp-2 font-display text-sm font-semibold text-navy-900">{product.name}</h3>
-        <p className="mt-2 font-mono text-base font-semibold text-navy-900">{formatPrice(product.price)}</p>
+        <h3 className="mt-1 line-clamp-2 min-h-[2.5rem] font-display text-sm font-semibold text-navy-900">
+          {product.name}
+        </h3>
+        <p className="mt-auto pt-2 font-mono text-base font-semibold text-navy-900">{formatPrice(product.price)}</p>
       </div>
     </Link>
   );
