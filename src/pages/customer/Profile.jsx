@@ -23,7 +23,7 @@ const profileSchema = yup.object({
   phoneNumber: yup
     .string()
     .trim()
-    .matches(/^01[0-2,5]{1}[0-9]{8}$/, "Enter a valid Egyptian mobile number"),
+    .matches(/^[0-9]{7,15}$/, "Phone number must be 7–15 digits"),
 });
 
 const Profile = () => {
@@ -127,7 +127,7 @@ const Profile = () => {
             <Input label="Last name" error={profileErrors.lastName?.message} {...registerProfile("lastName")} />
           </div>
           <Input label="Email" value={user?.email} disabled hint="Email cannot be changed" />
-          <Input label="Phone number" prefix="+20" error={profileErrors.phoneNumber?.message} {...registerProfile("phoneNumber")} />
+          <Input label="Phone number" error={profileErrors.phoneNumber?.message} {...registerProfile("phoneNumber")} />
           <Button type="submit" loading={savingProfile}>Save Changes</Button>
         </form>
       </div>

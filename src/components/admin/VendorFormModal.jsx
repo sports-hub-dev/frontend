@@ -57,7 +57,7 @@ const VendorFormModal = ({ open, onClose, vendor, onSaved }) => {
         {!vendor && (
           <Input label="Email" type="email" error={errors.email?.message} {...register("email", { required: "Email is required" })} />
         )}
-        <Input label="Phone" prefix="+20" {...register("phone")} />
+        <Input label="Phone" {...register("phone")} />
         <Textarea label="Description" rows={3} {...register("description")} />
         <div className="grid grid-cols-2 gap-4">
           <Input label="City" {...register("city")} />

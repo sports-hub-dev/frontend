@@ -95,8 +95,6 @@ const RegisterVendor = () => {
         <Input label="Email" type="email" placeholder="you@dspcompany.com" error={errors.email?.message} {...register("email")} />
         <Input
           label="Phone number"
-          placeholder="01xxxxxxxxx"
-          prefix="+20"
           error={errors.phoneNumber?.message}
           {...register("phoneNumber")}
         />

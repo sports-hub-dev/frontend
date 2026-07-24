@@ -19,7 +19,7 @@ const AddressFormFields = ({ register, errors = {} }) => (
   <div className="space-y-4">
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <Input label="Full name" error={errors.fullName?.message} {...register("fullName")} />
-      <Input label="Phone number" prefix="+20" placeholder="01xxxxxxxxx" error={errors.phoneNumber?.message} {...register("phoneNumber")} />
+      <Input label="Phone number" error={errors.phoneNumber?.message} {...register("phoneNumber")} />
     </div>
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <Input label="City" error={errors.city?.message} {...register("city")} />

@@ -16,7 +16,7 @@ export const baseRegisterSchema = {
   phoneNumber: yup
     .string()
     .trim()
-    .matches(/^01[0-2,5]{1}[0-9]{8}$/, "Enter a valid Egyptian mobile number")
+    .matches(/^[0-9]{7,15}$/, "Phone number must be 7–15 digits")
     .required("Phone number is required"),
 };
 
