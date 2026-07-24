@@ -72,7 +72,6 @@ function App() {
           <Route path={ROUTES.DELIVERY_POLICY} element={<DeliveryPolicy />} />
           <Route path={ROUTES.CANCELLATION_POLICY} element={<CancellationPolicy />} />
           <Route path={ROUTES.REFUND_POLICY} element={<RefundPolicy />} />
-          <Route path={ROUTES.ADMIN_CONTACT} element={<AdminContact />} />
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.REGISTER} element={<RegisterCustomer />} />
           <Route path={ROUTES.REGISTER_VENDOR} element={<RegisterVendor />} />
@@ -104,6 +103,7 @@ function App() {
             <Route path={ROUTES.ADMIN_PROMO_CODES} element={<AdminPromoCodes />} />
             <Route path={ROUTES.ADMIN_FEEDBACK} element={<AdminFeedback />} />
             <Route path={ROUTES.ADMIN_SETTINGS} element={<AdminSettings />} />
+            <Route path={ROUTES.ADMIN_CONTACT} element={<AdminContact />} />
           </Route>
         </Route>
       </Routes>
