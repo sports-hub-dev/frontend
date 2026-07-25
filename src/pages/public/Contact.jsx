@@ -10,9 +10,9 @@ import Button from "../../components/ui/Button";
 import { useReveal } from "../../hooks/useReveal";
 
 const CONTACT_DETAILS = [
-  { label: "Email", value: "support@sportshub.example.com", href: "mailto:support@sportshub.example.com",
+  { label: "Email", value: "info@sportshubegypt.com", href: "mailto:info@sportshubegypt.com",
     icon: "M3 8l9 6 9-6M3 8v10a2 2 0 002 2h14a2 2 0 002-2V8M3 8l9-5 9 5" },
-  { label: "Phone", value: "+20 100 000 0000", href: "tel:+201000000000",
+  { label: "Phone", value: "+20 100 000 0000", href: "tel:+201103808400",
     icon: "M3 5a2 2 0 012-2h2.28a1 1 0 01.98.79l1 4a1 1 0 01-.27.95L7.6 10.15a12 12 0 006.25 6.25l1.41-1.41a1 1 0 01.95-.27l4 1a1 1 0 01.79.98V19a2 2 0 01-2 2h-1C8.61 21 3 15.39 3 8V5z" },
   { label: "Address", value: "134 Tawoynat Smouha, First Floor, Alexandria, Egypt",
     icon: "M17.66 10.34a5.66 5.66 0 11-11.32 0C6.34 6 12 2 12 2s5.66 4 5.66 8.34zM12 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" },

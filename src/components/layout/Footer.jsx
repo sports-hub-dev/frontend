@@ -18,7 +18,7 @@ const Footer = () => (
           <div className="py-2">
             <a href="https://www.facebook.com/share/19VJ1aW813/?mibextid=wwXIfr" aria-label="Facebook" className="px-2"> <FontAwesomeIcon icon={faFacebook} color="#1877F2" /> </a>
             <a href="https://www.instagram.com/sportshubegypt/" aria-label="Instagram" className="px-2"> <FontAwesomeIcon icon={faInstagram} color="#E4405F" /></a>
-            <a href="https://wa.me/YOUR_NUMBER" aria-label="WhatsApp" className="px-2"><FontAwesomeIcon icon={faWhatsapp} color="#25D366" /></a>
+            <a href="https://wa.me/+201128772325" aria-label="WhatsApp" className="px-2"><FontAwesomeIcon icon={faWhatsapp} color="#25D366" /></a>
           </div>
         </div>
         <div className="text-center">
