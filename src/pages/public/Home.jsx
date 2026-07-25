@@ -52,8 +52,7 @@ const Home = () => {
             Built like performance wear.
           </h1>
           <p className="mt-6 max-w-lg animate-fadeUp text-sm leading-relaxed text-navy-100/90 sm:text-base mx-auto sm:mx-0" style={{ animationDelay: "160ms" }}>
-            Uniforms and PPE for Egypt's delivery and logistics workforce — designed for durability, visibility,
-            and all-day comfort.
+            This website and its e-commerce operations are operated by Outfit Theory Readymade Garments Trading L.L.C S.O.C, a company legally registered in the UAE, trading under the Sportshub brand.
           </p>
           <div className="mt-10 flex animate-fadeUp flex-col items-center gap-4 sm:flex-row" style={{ animationDelay: "220ms" }}>
             <Link to={ROUTES.PRODUCTS} className="w-full sm:w-64">
