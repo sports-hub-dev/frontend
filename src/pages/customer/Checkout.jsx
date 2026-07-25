@@ -12,6 +12,9 @@ import CartSummary from "../../components/cart/CartSummary";
 import Button from "../../components/ui/Button";
 import { cn } from "../../utils/cn";
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authApi } from "../../api/auth.api";
+import { fetchCurrentUser } from "../../app/authSlice";
 
 /**
  * Amazon Payment Services (APS) is a hosted-checkout gateway: the backend
@@ -40,6 +43,8 @@ const redirectToAps = ({ checkoutUrl, formFields }) => {
 };
 
 const Checkout = () => {
+  const dispatch = useDispatch();
+  const [savingAddress, setSavingAddress] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
   const { items, promo, clearCart } = useCart();
@@ -52,6 +57,8 @@ const Checkout = () => {
   const {
     register,
     handleSubmit,
+    trigger,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(addressSchema),
@@ -69,6 +76,26 @@ const Checkout = () => {
       }
       : {},
   });
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm({
+  //   resolver: yupResolver(addressSchema),
+  //   defaultValues: defaultAddress
+  //     ? {
+  //       fullName: defaultAddress.fullName,
+  //       phoneNumber: defaultAddress.phoneNumber,
+  //       city: defaultAddress.city,
+  //       area: defaultAddress.area,
+  //       street: defaultAddress.street,
+  //       building: defaultAddress.building,
+  //       floor: defaultAddress.floor,
+  //       apartment: defaultAddress.apartment,
+  //       notes: defaultAddress.notes,
+  //     }
+  //     : {},
+  // });
 
   useEffect(() => {
     if (!items.length) navigate(ROUTES.CART, { replace: true });
@@ -85,6 +112,24 @@ const Checkout = () => {
     items: items.map((i) => ({ product: i.productId, quantity: i.quantity, ...(i.size ? { size: i.size } : {}) })),
     ...(promo ? { promoCode: promo.code } : {}),
   });
+
+  const handleSaveAddress = async () => {
+    const valid = await trigger(["fullName", "phoneNumber", "city", "area", "street", "building", "floor", "apartment", "notes"]);
+    if (!valid) {
+      toast.error("Please fill in the address fields correctly before saving");
+      return;
+    }
+    setSavingAddress(true);
+    try {
+      await authApi.addAddress(getValues());
+      await dispatch(fetchCurrentUser());
+      toast.success("Address saved to your profile");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Couldn't save address");
+    } finally {
+      setSavingAddress(false);
+    }
+  };
 
   const handlePlaceOrder = async (address) => {
     setPlacingOrder(true);
@@ -132,7 +177,12 @@ const Checkout = () => {
         <div className="space-y-6">
           {/* Shipping address */}
           <div className="animate-fadeUp rounded-2xl border border-navy-100 bg-white p-6 shadow-card">
-            <h2 className="mb-4 font-display text-base font-semibold text-navy-900">Shipping Address</h2>
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-display text-base font-semibold text-navy-900">Shipping Address</h2>
+              <Button type="button" variant="outline" size="sm" onClick={handleSaveAddress} loading={savingAddress}>
+                Save Address
+              </Button>
+            </div>
             <AddressFormFields register={register} errors={errors} />
           </div>
 
