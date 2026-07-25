@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
           className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
         {!product.isPublic && (
-          <span className="stamp absolute left-3 top-3 bg-navy-900/90 text-white backdrop-blur-sm">DSP Only</span>
+          <span className="stamp absolute left-3 bottom-3 bg-navy-900/90 text-white backdrop-blur-sm">DSP Only</span>
         )}
         <div className="absolute right-3 top-3">
           <StockBadge stock={stock} />
