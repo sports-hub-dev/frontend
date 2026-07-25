@@ -5,9 +5,9 @@ import { useReveal } from "../../hooks/useReveal";
 import HeroCarousel from "../../components/ui/HeroCarousel";
 
 const HERO_IMAGES = [
-  "https://res.cloudinary.com/dsfa43amy/image/upload/v1784453290/Testt_u3ljtm.jpg",
-  "https://res.cloudinary.com/dsfa43amy/image/upload/v1784453482/Testt2_kxythh.jpg",
-  "https://res.cloudinary.com/dsfa43amy/image/upload/v1784453592/Test3_ujzc6r.jpg",
+  "https://res.cloudinary.com/dsfa43amy/image/upload/v1784941567/748948191_2068249790565558_6777729908389190862_n_vqpqh3.jpg",
+  "https://res.cloudinary.com/dsfa43amy/image/upload/v1784941567/752652639_1573384814500064_6403601339349822122_n_dr8opg.jpg",
+  "https://res.cloudinary.com/dsfa43amy/image/upload/v1784941567/751665757_1427493726067978_4485987897282091929_n_bkduzc.jpg",
 ];
 
 const STORY_PANELS = [
