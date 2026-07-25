@@ -76,33 +76,35 @@ const AdminOrders = () => {
         <EmptyState title="No orders found" description="Try adjusting your search or filters." />
       ) : (
         <>
-          <div className="hidden overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-card lg:block">
-            <table className="w-full text-sm">
-              <thead className="bg-navy-50 text-left text-xs font-semibold uppercase tracking-wide text-navy-500">
-                <tr>
-                  <th className="px-4 py-3">Order #</th>
-                  <th className="px-4 py-3">Customer</th>
-                  <th className="px-4 py-3">Date</th>
-                  <th className="px-4 py-3">Total</th>
-                  <th className="px-4 py-3">Payment</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3">Vendor</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-navy-100">
-                {orders.map((o) => (
-                  <tr key={o._id} onClick={() => setSelectedOrder(o)} className="cursor-pointer transition-colors hover:bg-navy-50/50">
-                    <td className="tracking-code px-4 py-3 font-medium text-navy-900">{formatOrderNumber(o.orderNumber)}</td>
-                    <td className="px-4 py-3 text-navy-600">{o.customerInfo?.name}</td>
-                    <td className="px-4 py-3 text-navy-500">{formatDate(o.createdAt)}</td>
-                    <td className="px-4 py-3 font-mono text-navy-900">{formatPrice(o.total)}</td>
-                    <td className="px-4 py-3"><PaymentStatusBadge status={o.paymentStatus} /></td>
-                    <td className="px-4 py-3"><OrderStatusBadge status={o.status} /></td>
-                    <td className="px-4 py-3">{o.vendorId ? <Badge>{o.vendorId.name}</Badge> : <span className="text-navy-300">—</span>}</td>
+          <div className="hidden rounded-2xl border border-navy-100 bg-white shadow-card lg:block">
+            <div className="overflow-x-auto rounded-2xl">
+              <table className="w-full text-sm">
+                <thead className="bg-navy-50 text-left text-xs font-semibold uppercase tracking-wide text-navy-500">
+                  <tr>
+                    <th className="px-4 py-3">Order #</th>
+                    <th className="px-4 py-3">Customer</th>
+                    <th className="px-4 py-3">Date</th>
+                    <th className="px-4 py-3">Total</th>
+                    <th className="px-4 py-3">Payment</th>
+                    <th className="px-4 py-3">Status</th>
+                    <th className="px-4 py-3">Vendor</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-navy-100">
+                  {orders.map((o) => (
+                    <tr key={o._id} onClick={() => setSelectedOrder(o)} className="cursor-pointer transition-colors hover:bg-navy-50/50">
+                      <td className="tracking-code px-4 py-3 font-medium text-navy-900">{formatOrderNumber(o.orderNumber)}</td>
+                      <td className="px-4 py-3 text-navy-600">{o.customerInfo?.name}</td>
+                      <td className="px-4 py-3 text-navy-500">{formatDate(o.createdAt)}</td>
+                      <td className="px-4 py-3 font-mono text-navy-900">{formatPrice(o.total)}</td>
+                      <td className="px-4 py-3"><PaymentStatusBadge status={o.paymentStatus} /></td>
+                      <td className="px-4 py-3"><OrderStatusBadge status={o.status} /></td>
+                      <td className="px-4 py-3">{o.vendorId ? <Badge>{o.vendorId.name}</Badge> : <span className="text-navy-300">—</span>}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div className="space-y-3 lg:hidden">

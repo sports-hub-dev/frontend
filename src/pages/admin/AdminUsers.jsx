@@ -129,50 +129,52 @@ const AdminUsers = () => {
         <EmptyState title={tab === "pending" ? "No pending approvals" : "No users found"} description="Nothing to show right now." />
       ) : (
         <>
-          <div className="hidden overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-card lg:block">
-            <table className="w-full text-sm">
-              <thead className="bg-navy-50 text-left text-xs font-semibold uppercase tracking-wide text-navy-500">
-                <tr>
-                  <th className="px-4 py-3">Name</th>
-                  <th className="px-4 py-3">Email</th>
-                  <th className="px-4 py-3">Role</th>
-                  <th className="px-4 py-3">Vendor</th>
-                  <th className="px-4 py-3">Approval</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3">Joined</th>
-                  <th className="px-4 py-3 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-navy-100">
-                {users.map((u) => (
-                  <tr key={u._id} className="transition-colors hover:bg-navy-50/50">
-                    <td className="px-4 py-3 font-medium text-navy-900">{u.firstName} {u.lastName}</td>
-                    <td className="px-4 py-3 text-navy-500">{u.email}</td>
-                    <td className="px-4 py-3"><Badge tone={u.role === "admin" ? "warning" : "neutral"}>{u.role}</Badge></td>
-                    <td className="px-4 py-3 text-navy-500">{u.vendorId?.name || "—"}</td>
-                    <td className="px-4 py-3">
-                      {u.vendorId ? <Badge tone={u.isApproved ? "success" : "warning"}>{u.isApproved ? "Approved" : "Pending"}</Badge> : <span className="text-navy-300">N/A</span>}
-                    </td>
-                    <td className="px-4 py-3"><Badge tone={u.isActive ? "success" : "danger"}>{u.isActive ? "Active" : "Inactive"}</Badge></td>
-                    <td className="px-4 py-3 text-navy-500">{formatDate(u.createdAt)}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end gap-2">
-                        {u.vendorId && !u.isApproved ? (
-                          <>
-                            <Button size="sm" onClick={() => handleApprove(u)} loading={actionLoading === u._id}>Approve</Button>
-                            <Button size="sm" variant="danger" onClick={() => setRejectTarget(u)}>Reject</Button>
-                          </>
-                        ) : (
-                          <Button size="sm" variant="outline" onClick={() => handleToggleStatus(u)} loading={actionLoading === u._id}>
-                            {u.isActive ? "Deactivate" : "Activate"}
-                          </Button>
-                        )}
-                      </div>
-                    </td>
+          <div className="hidden rounded-2xl border border-navy-100 bg-white shadow-card lg:block">
+            <div className="overflow-x-auto rounded-2xl">
+              <table className="w-full text-sm">
+                <thead className="bg-navy-50 text-left text-xs font-semibold uppercase tracking-wide text-navy-500">
+                  <tr>
+                    <th className="px-4 py-3">Name</th>
+                    <th className="px-4 py-3">Email</th>
+                    <th className="px-4 py-3">Role</th>
+                    <th className="px-4 py-3">Vendor</th>
+                    <th className="px-4 py-3">Approval</th>
+                    <th className="px-4 py-3">Status</th>
+                    <th className="px-4 py-3">Joined</th>
+                    <th className="px-4 py-3 text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-navy-100">
+                  {users.map((u) => (
+                    <tr key={u._id} className="transition-colors hover:bg-navy-50/50">
+                      <td className="px-4 py-3 font-medium text-navy-900">{u.firstName} {u.lastName}</td>
+                      <td className="px-4 py-3 text-navy-500">{u.email}</td>
+                      <td className="px-4 py-3"><Badge tone={u.role === "admin" ? "warning" : "neutral"}>{u.role}</Badge></td>
+                      <td className="px-4 py-3 text-navy-500">{u.vendorId?.name || "—"}</td>
+                      <td className="px-4 py-3">
+                        {u.vendorId ? <Badge tone={u.isApproved ? "success" : "warning"}>{u.isApproved ? "Approved" : "Pending"}</Badge> : <span className="text-navy-300">N/A</span>}
+                      </td>
+                      <td className="px-4 py-3"><Badge tone={u.isActive ? "success" : "danger"}>{u.isActive ? "Active" : "Inactive"}</Badge></td>
+                      <td className="px-4 py-3 text-navy-500">{formatDate(u.createdAt)}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex justify-end gap-2">
+                          {u.vendorId && !u.isApproved ? (
+                            <>
+                              <Button size="sm" onClick={() => handleApprove(u)} loading={actionLoading === u._id}>Approve</Button>
+                              <Button size="sm" variant="danger" onClick={() => setRejectTarget(u)}>Reject</Button>
+                            </>
+                          ) : (
+                            <Button size="sm" variant="outline" onClick={() => handleToggleStatus(u)} loading={actionLoading === u._id}>
+                              {u.isActive ? "Deactivate" : "Activate"}
+                            </Button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div className="space-y-3 lg:hidden">

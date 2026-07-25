@@ -112,54 +112,56 @@ const AdminProducts = () => {
       ) : (
         <>
           {/* Desktop table */}
-          <div className="hidden overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-card lg:block">
-            <table className="w-full text-sm">
-              <thead className="bg-navy-50 text-left text-xs font-semibold uppercase tracking-wide text-navy-500">
-                <tr>
-                  <th className="px-4 py-3">Product</th>
-                  <th className="px-4 py-3">Category</th>
-                  <th className="px-4 py-3">Price</th>
-                  <th className="px-4 py-3">Stock</th>
-                  <th className="px-4 py-3">Visibility</th>
-                  <th className="px-4 py-3">Vendor</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-navy-100">
-                {products.map((p) => (
-                  <tr key={p._id} className="transition-colors hover:bg-navy-50/50">
-                    <td className="flex items-center gap-3 px-4 py-3">
-                      <img src={p.mainImage} alt="" className="h-10 w-10 rounded-lg object-cover" />
-                      <span className="max-w-[180px] truncate font-medium text-navy-900">{p.name}</span>
-                    </td>
-                    <td className="px-4 py-3 text-navy-500">{p.category}</td>
-                    <td className="px-4 py-3 font-mono text-navy-900">{formatPrice(p.price)}</td>
-                    <td className="px-4 py-3 text-navy-500">{p.totalStock ?? p.stock}</td>
-                    <td className="px-4 py-3">
-                      <Badge tone={p.isPublic ? "success" : "neutral"}>{p.isPublic ? "Public" : "Vendor-Only"}</Badge>
-                    </td>
-                    <td className="px-4 py-3 text-navy-500">{p.vendorId?.name || "—"}</td>
-                    <td className="px-4 py-3">
-                      {p.isDeleted ? <Badge tone="danger">Deleted</Badge> : <Badge tone="success">Active</Badge>}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end gap-2">
-                        {p.isDeleted ? (
-                          <Button size="sm" variant="outline" onClick={() => handleRestore(p)}>Restore</Button>
-                        ) : (
-                          <>
-                            <Button size="sm" variant="outline" onClick={() => setImagesModal({ open: true, product: p })}>Images</Button>
-                            <Button size="sm" variant="outline" onClick={() => setFormModal({ open: true, product: p })}>Edit</Button>
-                            <Button size="sm" variant="danger" onClick={() => setDeleteTarget(p)}>Delete</Button>
-                          </>
-                        )}
-                      </div>
-                    </td>
+          <div className="hidden rounded-2xl border border-navy-100 bg-white shadow-card lg:block">
+            <div className="overflow-x-auto rounded-2xl">
+              <table className="w-full text-sm">
+                <thead className="bg-navy-50 text-left text-xs font-semibold uppercase tracking-wide text-navy-500">
+                  <tr>
+                    <th className="px-4 py-3">Product</th>
+                    <th className="px-4 py-3">Category</th>
+                    <th className="px-4 py-3">Price</th>
+                    <th className="px-4 py-3">Stock</th>
+                    <th className="px-4 py-3">Visibility</th>
+                    <th className="px-4 py-3">Vendor</th>
+                    <th className="px-4 py-3">Status</th>
+                    <th className="px-4 py-3 text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-navy-100">
+                  {products.map((p) => (
+                    <tr key={p._id} className="transition-colors hover:bg-navy-50/50">
+                      <td className="flex items-center gap-3 px-4 py-3">
+                        <img src={p.mainImage} alt="" className="h-10 w-10 rounded-lg object-cover" />
+                        <span className="max-w-[180px] truncate font-medium text-navy-900">{p.name}</span>
+                      </td>
+                      <td className="px-4 py-3 text-navy-500">{p.category}</td>
+                      <td className="px-4 py-3 font-mono text-navy-900">{formatPrice(p.price)}</td>
+                      <td className="px-4 py-3 text-navy-500">{p.totalStock ?? p.stock}</td>
+                      <td className="px-4 py-3">
+                        <Badge tone={p.isPublic ? "success" : "neutral"}>{p.isPublic ? "Public" : "Vendor-Only"}</Badge>
+                      </td>
+                      <td className="px-4 py-3 text-navy-500">{p.vendorId?.name || "—"}</td>
+                      <td className="px-4 py-3">
+                        {p.isDeleted ? <Badge tone="danger">Deleted</Badge> : <Badge tone="success">Active</Badge>}
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex justify-end gap-2">
+                          {p.isDeleted ? (
+                            <Button size="sm" variant="outline" onClick={() => handleRestore(p)}>Restore</Button>
+                          ) : (
+                            <>
+                              <Button size="sm" variant="outline" onClick={() => setImagesModal({ open: true, product: p })}>Images</Button>
+                              <Button size="sm" variant="outline" onClick={() => setFormModal({ open: true, product: p })}>Edit</Button>
+                              <Button size="sm" variant="danger" onClick={() => setDeleteTarget(p)}>Delete</Button>
+                            </>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {/* Mobile cards */}
