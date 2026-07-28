@@ -141,6 +141,7 @@ const Checkout = () => {
       const { data } = await ordersApi.createOrder(buildOrderPayload(address));
       clearCart();
       toast.success("Test order placed (payment skipped)");
+      
       navigate(buildRoute(ROUTES.ORDER_DETAIL, { id: data.data.order._id }));
     } catch (err) {
       toast.error(err.response?.data?.message || "Couldn't place test order.");
@@ -197,11 +198,11 @@ const Checkout = () => {
               <Link to={ROUTES.DELIVERY_POLICY} className="underline hover:text-navy-700">Delivery</Link> policies.
             </p>
 
-            {process.env.NODE_ENV !== "production" && (
+            {user?.role === "admin" && (
               <div className="mt-4 rounded-lg border border-dashed border-amber-300 bg-amber-50 p-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-amber-700">Testing Only</p>
                 <p className="mt-1 text-xs text-amber-700/80">
-                  Skips both payment gateways entirely and creates the order directly (paymentMethod: unpaid).
+                  Create this order without payment for testing purposes.
                 </p>
                 <Button
                   type="button"
