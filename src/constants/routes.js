@@ -15,6 +15,7 @@ export const ROUTES = {
   TRACK_ORDER: "/track",
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password/:token",
+  VERIFY_EMAIL: "/verify-email/:token",
 
   CART: "/cart",
   CHECKOUT: "/checkout",

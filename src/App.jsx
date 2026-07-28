@@ -10,6 +10,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminRoute from "./routes/AdminRoute";
 import AdminContact from "./pages/admin/AdminContact";
+import VerifyEmail from "./pages/public/VerifyEmail";
 
 // Public pages
 import Home from "./pages/public/Home";
@@ -78,6 +79,7 @@ function App() {
           <Route path={ROUTES.TRACK_ORDER} element={<TrackOrder />} />
           <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
+          <Route path={ROUTES.VERIFY_EMAIL} element={<VerifyEmail />} />
           <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
         </Route>
 

@@ -13,4 +13,5 @@ export const authApi = {
   addAddress: (payload) => axiosInstance.post("/auth/me/addresses", payload),
   updateAddress: (addressId, payload) => axiosInstance.patch(`/auth/me/addresses/${addressId}`, payload),
   deleteAddress: (addressId) => axiosInstance.delete(`/auth/me/addresses/${addressId}`),
+  verifyEmail: (token) => axiosInstance.get(`/auth/verify-email/${token}`),
 };

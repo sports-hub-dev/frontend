@@ -44,6 +44,8 @@ const Login = () => {
       // surface it clearly instead of a generic "invalid credentials" toast.
       if (message.toLowerCase().includes("pending") || message.toLowerCase().includes("approval")) {
         setPendingMessage(message);
+      } else if (message.toLowerCase().includes("verify your email")) {
+        setPendingMessage(message);
       } else {
         toast.error(message);
       }

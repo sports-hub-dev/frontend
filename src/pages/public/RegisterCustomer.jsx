@@ -24,7 +24,7 @@ const RegisterCustomer = () => {
     setLoading(true);
     try {
       await authApi.register(values);
-      toast.success("Account created! You can log in now.");
+      toast.success("Account created! Check your email to verify your account before logging in.");
       navigate(ROUTES.LOGIN);
     } catch (err) {
       const apiErrors = err.response?.data?.errors;
