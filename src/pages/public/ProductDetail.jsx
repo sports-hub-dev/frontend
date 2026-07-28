@@ -138,7 +138,7 @@ const ProductDetail = () => {
             <StockBadge stock={availableStock} />
           </div>
 
-          <p className="mt-5 text-sm leading-relaxed text-navy-600">{product.description}</p>
+          <p className="mt-5 whitespace-pre-line text-sm leading-relaxed text-navy-600">{product.description}</p>
 
           {product.hasSizeVariants && (
             <div className="mt-6">
