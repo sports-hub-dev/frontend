@@ -16,6 +16,7 @@ export const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password/:token",
   VERIFY_EMAIL: "/verify-email/:token",
+  
 
   CART: "/cart",
   CHECKOUT: "/checkout",
@@ -33,6 +34,7 @@ export const ROUTES = {
   ADMIN_FEEDBACK: "/admin/feedback",
   ADMIN_SETTINGS: "/admin/settings",
   ADMIN_CONTACT: "/admin/contact",
+  ADMIN_BUNDLES: "/admin/bundles",
 
   NOT_FOUND: "*",
 };

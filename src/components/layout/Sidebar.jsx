@@ -7,6 +7,7 @@ import Logo from "./Logo";
 const NAV_ITEMS = [
   { to: ROUTES.ADMIN_DASHBOARD, label: "Dashboard", end: true },
   { to: ROUTES.ADMIN_PRODUCTS, label: "Products" },
+  { to: ROUTES.ADMIN_BUNDLES, label: "Bundles" },
   { to: ROUTES.ADMIN_ORDERS, label: "Orders" },
   { to: ROUTES.ADMIN_USERS, label: "Users" },
   { to: ROUTES.ADMIN_VENDORS, label: "DSP Vendors" },
@@ -20,6 +21,7 @@ const ICONS = {
   "Contact Messages": "M3 8l9 6 9-6M3 8v10a2 2 0 002 2h14a2 2 0 002-2V8M3 8l9-5 9 5",
   Dashboard: "M3 12h4v8H3zM10 4h4v16h-4zM17 8h4v12h-4z",
   Products: "M3 7l1.5-3h15L21 7M3 7v11a2 2 0 002 2h14a2 2 0 002-2V7M3 7h18M8 11h8",
+  Bundles: "M20.6 12.6L12 21.2 2.8 12A2 2 0 012 10.6V4a2 2 0 012-2h6.6a2 2 0 011.4.6l8.6 8.6a2 2 0 010 2.8z",
   Orders: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 12h6M9 16h6",
   Users: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM3 21a7 7 0 0114 0M17 11a4 4 0 010 8M21 21a7 7 0 00-4-6.3",
   "DSP Vendors": "M3 7l9-4 9 4-9 4-9-4zM3 7v10l9 4 9-4V7M3 7l9 4 9-4",

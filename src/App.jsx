@@ -47,6 +47,7 @@ import AdminVendors from "./pages/admin/AdminVendors";
 import AdminPromoCodes from "./pages/admin/AdminPromoCodes";
 import AdminFeedback from "./pages/admin/AdminFeedback";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminBundles from "./pages/admin/AdminBundles";
 
 function App() {
   const dispatch = useDispatch();
@@ -106,6 +107,7 @@ function App() {
             <Route path={ROUTES.ADMIN_FEEDBACK} element={<AdminFeedback />} />
             <Route path={ROUTES.ADMIN_SETTINGS} element={<AdminSettings />} />
             <Route path={ROUTES.ADMIN_CONTACT} element={<AdminContact />} />
+            <Route path={ROUTES.ADMIN_BUNDLES} element={<AdminBundles />} />
           </Route>
         </Route>
       </Routes>
