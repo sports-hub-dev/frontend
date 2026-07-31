@@ -107,7 +107,7 @@ const BundleDetail = () => {
                             <div key={component.product._id} className="flex gap-4">
                                 <img
                                     src={resolveImageUrl(component.product.mainImage)}
-                                    alt={component.product.name}
+                                    alt={component.product._id}
                                     className="h-16 w-16 shrink-0 rounded-lg object-cover"
                                 />
                                 <div className="flex-1">
