@@ -36,7 +36,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      const { productId, bundleId, name, mainImage, size, price, quantity } = action.payload;
+      const { productId, bundleId, name, mainImage, size, price, quantity, selections } = action.payload;
       const type = bundleId ? "bundle" : "product";
       const idx = findIndex(state.items, { type, productId, bundleId, size });
       if (idx > -1) {
@@ -49,6 +49,7 @@ const cartSlice = createSlice({
           name,
           mainImage,
           size: type === "product" ? size || null : null,
+          selections: type === "bundle" ? selections || [] : undefined,
           price,
           quantity,
         });

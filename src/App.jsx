@@ -31,6 +31,7 @@ import DeliveryPolicy from "./pages/public/legal/DeliveryPolicy";
 import CancellationPolicy from "./pages/public/legal/CancellationPolicy";
 import RefundPolicy from "./pages/public/legal/RefundPolicy";
 import Bundles from "./pages/public/Bundles";
+import BundleDetail from "./pages/public/BundleDetail";
 
 // Customer pages
 import Cart from "./pages/customer/Cart";
@@ -84,6 +85,7 @@ function App() {
           <Route path={ROUTES.VERIFY_EMAIL} element={<VerifyEmail />} />
           <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
           <Route path={ROUTES.BUNDLES} element={<Bundles />} />
+          <Route path={ROUTES.BUNDLE_DETAIL} element={<BundleDetail />} />
         </Route>
 
         {/* Protected customer routes — own layout shell (Navbar + Footer + auth guard) */}

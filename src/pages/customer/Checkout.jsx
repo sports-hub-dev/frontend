@@ -90,7 +90,7 @@ const Checkout = () => {
     // items: items.map((i) => ({ product: i.productId, quantity: i.quantity, ...(i.size ? { size: i.size } : {}) })),
     items: items.map((i) =>
       i.type === "bundle"
-        ? { bundle: i.bundleId, quantity: i.quantity }
+        ? { bundle: i.bundleId, quantity: i.quantity, selections: i.selections || [] }
         : { product: i.productId, quantity: i.quantity, ...(i.size ? { size: i.size } : {}) }
     ),
     ...(promo ? { promoCode: promo.code } : {}),

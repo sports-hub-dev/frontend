@@ -17,6 +17,7 @@ export const ROUTES = {
   RESET_PASSWORD: "/reset-password/:token",
   VERIFY_EMAIL: "/verify-email/:token",
   BUNDLES: "/bundles",
+  BUNDLE_DETAIL: "/bundles/:id",
   
 
   CART: "/cart",
