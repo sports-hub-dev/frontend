@@ -88,12 +88,12 @@ const Checkout = () => {
     },
     shippingAddress: address,
     // items: items.map((i) => ({ product: i.productId, quantity: i.quantity, ...(i.size ? { size: i.size } : {}) })),
-    // ...(promo ? { promoCode: promo.code } : {}),
     items: items.map((i) =>
       i.type === "bundle"
         ? { bundle: i.bundleId, quantity: i.quantity }
         : { product: i.productId, quantity: i.quantity, ...(i.size ? { size: i.size } : {}) }
     ),
+    ...(promo ? { promoCode: promo.code } : {}),
   });
 
   const handleSaveAddress = async () => {
