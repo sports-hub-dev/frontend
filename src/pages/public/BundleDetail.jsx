@@ -19,15 +19,18 @@ const BundleDetail = () => {
 
     const [bundle, setBundle] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [selectedSizes, setSelectedSizes] = useState({}); // { [productId]: size }
+    const [selectedSizes, setSelectedSizes] = useState({});
 
     useEffect(() => {
         bundlesApi.getBundleById(id)
             .then(({ data }) => {
-                console.log(data.data.bundle);
+                console.log("Success data:", data.data.bundle);
                 setBundle(data.data.bundle);
             })
-            .catch(() => setBundle(null))
+            .catch((error) => {
+                console.error("API Error:", error);
+                setBundle(null);
+            })
             .finally(() => setLoading(false));
     }, [id]);
 
