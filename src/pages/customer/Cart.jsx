@@ -33,8 +33,11 @@ const Cart = () => {
       <h1 className="mb-8 font-display text-2xl font-bold text-navy-900">Your Cart</h1>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px]">
         <div className="animate-fadeUp rounded-2xl border border-navy-100 bg-white p-5 shadow-card sm:p-6">
-          {items.map((item) => (
+          {/* {items.map((item) => (
             <CartItem key={`${item.productId}-${item.size || "nosize"}`} item={item} />
+          ))} */}
+          {items.map((item) => (
+            <CartItem key={item.type === "bundle" ? `bundle-${item.bundleId}` : `${item.productId}-${item.size || "nosize"}`} item={item} />
           ))}
         </div>
         <div className="animate-fadeUp" style={{ animationDelay: "80ms" }}>

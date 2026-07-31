@@ -19,12 +19,16 @@ const persistCart = (items) => {
   }
 };
 
-const findIndex = (items, { productId, size }) =>
-  items.findIndex((i) => i.productId === productId && (i.size || null) === (size || null));
+const findIndex = (items, { type, productId, bundleId, size }) =>
+  items.findIndex((i) => {
+    if (i.type !== type) return false;
+    if (type === "bundle") return i.bundleId === bundleId;
+    return i.productId === productId && (i.size || null) === (size || null);
+  });
 
 const initialState = {
   items: loadCart(),
-  promo: null, // { code, discountPercentage } — set by PromoCodeInput
+  promo: null,
 };
 
 const cartSlice = createSlice({
@@ -32,18 +36,29 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      const { productId, name, mainImage, size, price, quantity } = action.payload;
-      const idx = findIndex(state.items, { productId, size });
+      const { productId, bundleId, name, mainImage, size, price, quantity } = action.payload;
+      const type = bundleId ? "bundle" : "product";
+      const idx = findIndex(state.items, { type, productId, bundleId, size });
       if (idx > -1) {
         state.items[idx].quantity += quantity;
       } else {
-        state.items.push({ productId, name, mainImage, size: size || null, price, quantity });
+        state.items.push({
+          type,
+          productId: type === "product" ? productId : null,
+          bundleId: type === "bundle" ? bundleId : null,
+          name,
+          mainImage,
+          size: type === "product" ? size || null : null,
+          price,
+          quantity,
+        });
       }
       persistCart(state.items);
     },
     updateQuantity(state, action) {
-      const { productId, size, quantity } = action.payload;
-      const idx = findIndex(state.items, { productId, size });
+      const { productId, bundleId, size, quantity } = action.payload;
+      const type = bundleId ? "bundle" : "product";
+      const idx = findIndex(state.items, { type, productId, bundleId, size });
       if (idx > -1) {
         if (quantity <= 0) state.items.splice(idx, 1);
         else state.items[idx].quantity = quantity;
@@ -51,8 +66,13 @@ const cartSlice = createSlice({
       persistCart(state.items);
     },
     removeItem(state, action) {
-      const { productId, size } = action.payload;
-      state.items = state.items.filter((i) => !(i.productId === productId && (i.size || null) === (size || null)));
+      const { productId, bundleId, size } = action.payload;
+      const type = bundleId ? "bundle" : "product";
+      state.items = state.items.filter((i) => {
+        if (i.type !== type) return true;
+        if (type === "bundle") return i.bundleId !== bundleId;
+        return !(i.productId === productId && (i.size || null) === (size || null));
+      });
       persistCart(state.items);
     },
     clearCart(state) {

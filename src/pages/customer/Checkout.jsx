@@ -87,8 +87,13 @@ const Checkout = () => {
       phone: user.phoneNumber || address.phoneNumber,
     },
     shippingAddress: address,
-    items: items.map((i) => ({ product: i.productId, quantity: i.quantity, ...(i.size ? { size: i.size } : {}) })),
-    ...(promo ? { promoCode: promo.code } : {}),
+    // items: items.map((i) => ({ product: i.productId, quantity: i.quantity, ...(i.size ? { size: i.size } : {}) })),
+    // ...(promo ? { promoCode: promo.code } : {}),
+    items: items.map((i) =>
+      i.type === "bundle"
+        ? { bundle: i.bundleId, quantity: i.quantity }
+        : { product: i.productId, quantity: i.quantity, ...(i.size ? { size: i.size } : {}) }
+    ),
   });
 
   const handleSaveAddress = async () => {
@@ -141,7 +146,7 @@ const Checkout = () => {
       const { data } = await ordersApi.createOrder(buildOrderPayload(address));
       clearCart();
       toast.success("Test order placed (payment skipped)");
-      
+
       navigate(buildRoute(ROUTES.ORDER_DETAIL, { id: data.data.order._id }));
     } catch (err) {
       toast.error(err.response?.data?.message || "Couldn't place test order.");

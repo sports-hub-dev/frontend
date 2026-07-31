@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 const NAV_LINKS = [
   { to: ROUTES.HOME, label: "Home" },
   { to: ROUTES.PRODUCTS, label: "Products" },
+  { to: ROUTES.BUNDLES, label: "Bundle Deals" },
   { to: ROUTES.ABOUT, label: "About Us" },
   { to: ROUTES.CONTACT, label: "Contact" },
   { to: ROUTES.TRACK_ORDER, label: "Track Order" },
