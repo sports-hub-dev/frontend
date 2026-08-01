@@ -5,6 +5,7 @@ export const ORDER_STATUS_LABELS = {
   shipped: "Shipped",
   delivered: "Delivered",
   cancelled: "Cancelled",
+  refunded: "Refunded"
 };
 
 export const ORDER_STATUS_COLORS = {
@@ -14,6 +15,7 @@ export const ORDER_STATUS_COLORS = {
   shipped: "bg-safety-greenLight text-safety-green ring-1 ring-inset ring-safety-green/30",
   delivered: "bg-safety-greenLight text-safety-green ring-1 ring-inset ring-safety-green/30",
   cancelled: "bg-safety-redLight text-safety-red ring-1 ring-inset ring-safety-red/30",
+  refunded: "bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-200",
 };
 
 export const PAYMENT_STATUS_LABELS = {
@@ -30,4 +32,4 @@ export const PAYMENT_STATUS_COLORS = {
   refunded: "bg-navy-50 text-navy-700 ring-1 ring-inset ring-navy-200",
 };
 
-export const ORDER_STATUS_SEQUENCE = ["pending", "confirmed", "processing", "shipped", "delivered"];
+export const ORDER_STATUS_SEQUENCE = ["pending", "confirmed", "refunded", "processing", "shipped", "delivered"];
