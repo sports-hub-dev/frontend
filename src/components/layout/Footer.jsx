@@ -33,8 +33,9 @@ const Footer = () => (
           <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-amber">Company</h4>
           <ul className="space-y-2 text-sm text-navy-300">
             <li><Link className="transition-colors hover:text-white" to={ROUTES.ABOUT}>About Us</Link></li>
+            <li><Link className="transition-colors hover:text-white" to={`${ROUTES.ABOUT}#sustainability`}>Sustainability</Link></li>
             <li><Link className="transition-colors hover:text-white" to={ROUTES.CONTACT}>Contact</Link></li>
-            <li><Link className="transition-colors hover:text-white" to={ROUTES.REGISTER_VENDOR}>DSP Partner</Link></li>
+            {/* <li><Link className="transition-colors hover:text-white" to={ROUTES.REGISTER_VENDOR}>DSP Partner</Link></li> */}
             <li><Link className="transition-colors hover:text-white" to={ROUTES.REGISTER}>Create an Account</Link></li>
           </ul>
         </div>

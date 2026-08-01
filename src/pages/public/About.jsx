@@ -135,6 +135,30 @@ const About = () => {
         </div>
       </section>
 
+      {/* Sustainability */}
+      <section id="sustainability" className="border-t border-navy-100 bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <p className="text-center text-xs font-semibold uppercase tracking-wider text-amber-600">Environmental & Social Responsibility</p>
+          <h2 className="mt-1 text-center font-display text-2xl font-bold text-navy-900">Our Commitment to Sustainability</h2>
+          <div className="mt-6 space-y-4 text-sm leading-relaxed text-navy-500">
+            <p>
+              At SportsHub, we believe that business growth should go hand in hand with environmental and social
+              responsibility. We are committed to supporting responsible sourcing, promoting transparency throughout our
+              supply chain, and working with partners who uphold high standards of quality, ethics, and compliance.
+            </p>
+            <p>
+              We continuously seek opportunities to improve operational efficiency, reduce environmental impact, and
+              encourage responsible manufacturing practices wherever possible. Sustainability is an ongoing journey, and
+              we remain committed to making meaningful improvements as our business continues to grow.
+            </p>
+            <p>
+              As part of our commitment to sustainability, OUTFIT THEORY READYMADE GARMENTS TRADING L.L.C S.O.C supports
+              initiatives that help remove CO&#8322; from the atmosphere with every purchase.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="border-t border-navy-100 bg-white py-14">
         <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">

@@ -1,17 +1,19 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-/**
- * React Router doesn't reset scroll position on navigation by default.
- * This scrolls to the top of the page on every route change so clicking
- * a <Link> always lands you at the top of the destination page.
- */
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.replace("#", ""));
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+    }
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 };
