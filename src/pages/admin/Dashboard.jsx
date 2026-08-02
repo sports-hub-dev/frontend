@@ -175,6 +175,7 @@ const Dashboard = () => {
           <h3 className="mb-4 font-display text-sm font-semibold text-navy-900">Export Analytics</h3>
           <div className="items-end gap-2">
             <Input
+              className="w-2/3"
               label="From"
               type="date"
               value={exportRange.startDate}
