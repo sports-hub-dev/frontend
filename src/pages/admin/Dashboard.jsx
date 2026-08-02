@@ -179,14 +179,14 @@ const Dashboard = () => {
               type="date"
               value={exportRange.startDate}
               onChange={(e) => setExportRange((r) => ({ ...r, startDate: e.target.value }))}
-              containerClassName="w-1/2 sm:w-36"
+              containerClassName="w-full sm:w-36"
             />
             <Input
               label="To"
               type="date"
               value={exportRange.endDate}
               onChange={(e) => setExportRange((r) => ({ ...r, endDate: e.target.value }))}
-              containerClassName="w-1/2 sm:w-36"
+              containerClassName="w-full sm:w-36"
             />
           </div>
           <Button variant="outline" onClick={handleExportExcel} loading={exporting} className="mt-auto w-full">
