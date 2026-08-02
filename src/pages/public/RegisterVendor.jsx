@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ import Select from "../../components/ui/Select";
 import Button from "../../components/ui/Button";
 import Skeleton from "../../components/ui/Skeleton";
 import AuthCard from "./AuthCard";
+import TurnstileWidget from "../../components/ui/TurnstileWidget";
 
 /**
  * Any active, approved vendor/DSP company the backend returns from
@@ -23,6 +24,9 @@ const RegisterVendor = () => {
   const [vendorsLoading, setVendorsLoading] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const handleVerify = useCallback((token) => setTurnstileToken(token), []);
+  const handleExpire = useCallback(() => setTurnstileToken(""), []);
 
   const {
     register,
@@ -41,9 +45,13 @@ const RegisterVendor = () => {
   }, []);
 
   const onSubmit = async (values) => {
+    if (!turnstileToken) {
+      toast.error("Please complete the verification check.");
+      return;
+    }
     setLoading(true);
     try {
-      await authApi.registerVendorUser(values);
+      await authApi.registerVendorUser({ ...values, turnstileToken });
       setSubmitted(true);
     } catch (err) {
       const apiErrors = err.response?.data?.errors;
@@ -127,7 +135,9 @@ const RegisterVendor = () => {
           />
         )}
 
-        <Button type="submit" loading={loading} className="w-full" size="lg" disabled={!vendors.length && !vendorsLoading}>
+        <TurnstileWidget onVerify={handleVerify} onExpire={handleExpire} />
+
+        <Button type="submit" loading={loading} className="w-full" size="lg" disabled={!turnstileToken || (!vendors.length && !vendorsLoading)}>
           Submit for approval
         </Button>
       </form>
