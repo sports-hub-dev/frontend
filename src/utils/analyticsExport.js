@@ -1,5 +1,7 @@
 import ExcelJS from "exceljs";
 import { analyticsApi } from "../api/analytics.api";
+import { ordersApi } from "../api/orders.api";
+import { vendorsApi } from "../api/vendors.api";
 
 // Brand colors, matching tailwind.config.js
 const NAVY = "FF10192C";
@@ -55,13 +57,19 @@ const monthsAgoISO = (n) => {
 
 const nowISO = () => new Date().toISOString();
 
-/**
- * Fetches everything needed and builds a 4-sheet, brand-styled workbook:
- *   1. Summary          — totals for the user-selected custom date range
- *   2. Revenue Trend     — rolling 3/6/9/12-month windows, for quick trend comparison
- *   3. Top Products      — best sellers within the custom date range
- *   4. Order Status      — account-wide status breakdown (no date filter available on this endpoint)
- */
+const fetchAllOrdersInRange = async (startDate, endDate) => {
+  const orders = [];
+  let page = 1;
+  let totalPages = 1;
+  do {
+    const { data } = await ordersApi.getAllOrders({ page, limit: 100, startDate, endDate });
+    orders.push(...data.data);
+    totalPages = data.meta.totalPages;
+    page += 1;
+  } while (page <= totalPages);
+  return orders;
+};
+
 export const buildAnalyticsWorkbook = async ({ startDate, endDate }, statusBreakdown) => {
   const [customRes, r3, r6, r9, r12] = await Promise.all([
     analyticsApi.getDateRangeAnalytics({ startDate, endDate }),
@@ -158,6 +166,65 @@ export const buildAnalyticsWorkbook = async ({ startDate, endDate }, statusBreak
     const row = statusSheet.addRow([s.name, s.value]);
     styleDataCell(row.getCell(2));
   });
+
+  const [orders, vendorsRes] = await Promise.all([
+    fetchAllOrdersInRange(startDate, endDate),
+    vendorsApi.getAllVendors({ limit: 200 }),
+  ]);
+  const vendors = vendorsRes.data.data;
+
+  // ── Sheet 5: Orders ──────────────────────────────────────────────────────
+  const ordersSheet = workbook.addWorksheet("Orders");
+  ordersSheet.columns = [
+    { key: "orderNumber", width: 20 },
+    { key: "customer", width: 24 },
+    { key: "date", width: 14 },
+    { key: "status", width: 14 },
+    { key: "paymentStatus", width: 16 },
+    { key: "total", width: 16 },
+  ];
+  styleTitleRow(ordersSheet, `Orders (${startDate.slice(0, 10)} to ${endDate.slice(0, 10)})`, 6);
+  ordersSheet.addRow([]);
+  const ordersHeader = ordersSheet.addRow(["Order Number", "Customer", "Date", "Status", "Payment Status", "Total (EGP)"]);
+  styleHeaderRow(ordersHeader);
+
+  if (orders.length) {
+    orders.forEach((o) => {
+      const row = ordersSheet.addRow([
+        o.orderNumber,
+        o.customerInfo?.name || "—",
+        new Date(o.createdAt).toLocaleDateString(),
+        o.status,
+        o.paymentStatus,
+        o.total,
+      ]);
+      styleDataCell(row.getCell(6), { numFmt: "#,##0" });
+    });
+  } else {
+    ordersSheet.addRow(["—", "No orders in this date range", "—", "—", "—", "—"]);
+  }
+
+  // ── Sheet 6: Vendors ─────────────────────────────────────────────────────
+  const vendorsSheet = workbook.addWorksheet("Vendors");
+  vendorsSheet.columns = [
+    { key: "name", width: 26 },
+    { key: "email", width: 26 },
+    { key: "commission", width: 16 },
+    { key: "status", width: 14 },
+  ];
+  styleTitleRow(vendorsSheet, "Vendors (all-time — account-wide, not date-filterable)", 4);
+  vendorsSheet.addRow([]);
+  const vendorsHeader = vendorsSheet.addRow(["Vendor Name", "Email", "Commission Rate", "Status"]);
+  styleHeaderRow(vendorsHeader);
+
+  if (vendors.length) {
+    vendors.forEach((v) => {
+      const row = vendorsSheet.addRow([v.name, v.email, `${v.commissionRate}%`, v.isActive ? "Active" : "Suspended"]);
+      styleDataCell(row.getCell(3), { align: "right" });
+    });
+  } else {
+    vendorsSheet.addRow(["—", "No vendors found", "—", "—"]);
+  }
 
   return workbook;
 };
