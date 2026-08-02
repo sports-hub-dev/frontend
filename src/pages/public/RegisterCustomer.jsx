@@ -117,7 +117,7 @@ const RegisterCustomer = () => {
     setLoading(true);
     try {
       await authApi.register({ ...values, turnstileToken });
-      toast.success("Account created! You can now log in.");
+      toast.success("Account created! Check your email to verify your account before logging in.");
       navigate(ROUTES.LOGIN);
     } catch (err) {
       const apiErrors = err.response?.data?.errors;

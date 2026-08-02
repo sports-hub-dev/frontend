@@ -8,6 +8,8 @@ import { ROUTES } from "../../constants/routes";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import AuthCard from "./AuthCard";
+import { useCallback } from "react";
+import TurnstileWidget from "../../components/ui/TurnstileWidget";
 
 const schema = yup.object({
   email: yup.string().email("Enter a valid email").required("Email is required"),
@@ -16,6 +18,9 @@ const schema = yup.object({
 const ForgotPassword = () => {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const handleVerify = useCallback((token) => setTurnstileToken(token), []);
+  const handleExpire = useCallback(() => setTurnstileToken(""), []);
   const {
     register,
     handleSubmit,
@@ -23,6 +28,7 @@ const ForgotPassword = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async ({ email }) => {
+    if (!turnstileToken) { toast.error("Please complete the verification check."); return; }
     setLoading(true);
     try {
       await authApi.forgotPassword({ email });
@@ -42,7 +48,8 @@ const ForgotPassword = () => {
             If an account exists for that email, we've sent a link to reset your password.
           </p>
           <Link to={ROUTES.LOGIN}>
-            <Button variant="outline" className="mt-6">Back to log in</Button>
+            <TurnstileWidget onVerify={handleVerify} onExpire={handleExpire} />
+            <Button disabled={!turnstileToken} variant="outline" className="mt-6">Back to log in</Button>
           </Link>
         </div>
       </AuthCard>
