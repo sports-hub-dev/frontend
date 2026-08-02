@@ -173,20 +173,20 @@ const Dashboard = () => {
 
         <div className="animate-fadeUp flex flex-col rounded-2xl border border-navy-100 bg-white p-6 shadow-card lg:col-span-2" style={{ animationDelay: "80ms" }}>
           <h3 className="mb-4 font-display text-sm font-semibold text-navy-900">Export Analytics</h3>
-          <div className="items-end gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-end gap-3 mb-4">
             <Input
               label="From"
               type="date"
               value={exportRange.startDate}
               onChange={(e) => setExportRange((r) => ({ ...r, startDate: e.target.value }))}
-              containerClassName="w-28 sm:w-full"
+              containerClassName="w-full sm:w-36"
             />
             <Input
               label="To"
               type="date"
               value={exportRange.endDate}
               onChange={(e) => setExportRange((r) => ({ ...r, endDate: e.target.value }))}
-              containerClassName="w-28 sm:w-full"
+              containerClassName="w-full sm:w-36"
             />
           </div>
           <Button variant="outline" onClick={handleExportExcel} loading={exporting} className="mt-auto w-full">
