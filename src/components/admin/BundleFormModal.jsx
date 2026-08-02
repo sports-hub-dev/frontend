@@ -88,7 +88,6 @@ const BundleFormModal = ({ open, onClose, onSaved, bundle }) => {
           {fields.map((field, idx) => (
             <div key={field.id} className="flex items-center gap-2">
               <Select
-                containerClassName="flex-1"
                 placeholder="Select product"
                 options={products.map((p) => ({ value: p._id, label: p.name }))}
                 {...register(`products.${idx}.product`, { required: true })}
