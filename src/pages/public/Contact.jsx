@@ -10,7 +10,6 @@ import Button from "../../components/ui/Button";
 import { useReveal } from "../../hooks/useReveal";
 import { useCallback } from "react";
 import TurnstileWidget from "../../components/ui/TurnstileWidget";
-import toast from "react-hot-toast";
 
 const CONTACT_DETAILS = [
   {
