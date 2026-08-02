@@ -175,19 +175,18 @@ const Dashboard = () => {
           <h3 className="mb-4 font-display text-sm font-semibold text-navy-900">Export Analytics</h3>
           <div className="items-end gap-2">
             <Input
-              className="w-2/3"
               label="From"
               type="date"
               value={exportRange.startDate}
               onChange={(e) => setExportRange((r) => ({ ...r, startDate: e.target.value }))}
-              containerClassName="w-full sm:w-36"
+              containerClassName="w-28 sm:w-full"
             />
             <Input
               label="To"
               type="date"
               value={exportRange.endDate}
               onChange={(e) => setExportRange((r) => ({ ...r, endDate: e.target.value }))}
-              containerClassName="w-full sm:w-36"
+              containerClassName="w-28 sm:w-full"
             />
           </div>
           <Button variant="outline" onClick={handleExportExcel} loading={exporting} className="mt-auto w-full">
