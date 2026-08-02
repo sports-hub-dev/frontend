@@ -9,7 +9,7 @@ import Select from "../ui/Select";
 import Textarea from "../ui/Textarea";
 import Button from "../ui/Button";
 
-const BundleFormModal = ({ open, onClose, onSaved }) => {
+const BundleFormModal = ({ open, onClose, onSaved, bundle }) => {
   const [products, setProducts] = useState([]);
   const [mainImageFile, setMainImageFile] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -22,10 +22,19 @@ const BundleFormModal = ({ open, onClose, onSaved }) => {
   useEffect(() => {
     if (open) {
       productsApi.adminGetProducts({ limit: 100 }).then(({ data }) => setProducts(data.data)).catch(() => setProducts([]));
-      reset({ name: "", description: "", discountPercentage: 10, products: [{ product: "", quantity: 1 }, { product: "", quantity: 1 }] });
+      reset(
+        bundle
+          ? {
+            name: bundle.name,
+            description: bundle.description,
+            discountPercentage: bundle.discountPercentage,
+            products: bundle.products.map((p) => ({ product: p.product._id || p.product, quantity: p.quantity })),
+          }
+          : { name: "", description: "", discountPercentage: 10, products: [{ product: "", quantity: 1 }, { product: "", quantity: 1 }] }
+      );
       setMainImageFile(null);
     }
-  }, [open, reset]);
+  }, [open, bundle, reset]);
 
   const onSubmit = async (values) => {
     if (values.products.length < 2) {
@@ -41,8 +50,13 @@ const BundleFormModal = ({ open, onClose, onSaved }) => {
       formData.append("products", JSON.stringify(values.products.map((p) => ({ product: p.product, quantity: Number(p.quantity) }))));
       if (mainImageFile) formData.append("mainImage", mainImageFile);
 
-      await bundlesApi.createBundle(formData);
-      toast.success("Bundle created");
+      if (bundle) {
+        await bundlesApi.updateBundle(bundle._id, formData);
+        toast.success("Bundle updated");
+      } else {
+        await bundlesApi.createBundle(formData);
+        toast.success("Bundle created");
+      }
       onSaved();
       onClose();
     } catch (err) {
@@ -53,7 +67,7 @@ const BundleFormModal = ({ open, onClose, onSaved }) => {
   };
 
   return (
-    <Modal open={open} onClose={onClose} title="Create Bundle" size="lg">
+    <Modal open={open} onClose={onClose} title={bundle ? "Edit Bundle" : "Create Bundle"} size="lg">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <Input label="Bundle name" error={errors.name?.message} {...register("name", { required: "Name is required" })} />
         <Textarea label="Description" rows={2} {...register("description")} />
@@ -93,7 +107,7 @@ const BundleFormModal = ({ open, onClose, onSaved }) => {
         </div>
 
         <Button type="submit" loading={saving} className="w-full" size="lg">
-          Create Bundle
+          {bundle ? "Save Changes" : "Create Bundle"}
         </Button>
       </form>
     </Modal>
