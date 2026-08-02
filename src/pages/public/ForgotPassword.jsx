@@ -10,6 +10,7 @@ import Button from "../../components/ui/Button";
 import AuthCard from "./AuthCard";
 import { useCallback } from "react";
 import TurnstileWidget from "../../components/ui/TurnstileWidget";
+import toast from "react-hot-toast";
 
 const schema = yup.object({
   email: yup.string().email("Enter a valid email").required("Email is required"),
