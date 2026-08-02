@@ -49,8 +49,7 @@ const ForgotPassword = () => {
             If an account exists for that email, we've sent a link to reset your password.
           </p>
           <Link to={ROUTES.LOGIN}>
-            <TurnstileWidget onVerify={handleVerify} onExpire={handleExpire} />
-            <Button disabled={!turnstileToken} variant="outline" className="mt-6">Back to log in</Button>
+            <Button variant="outline" className="mt-6">Back to log in</Button>
           </Link>
         </div>
       </AuthCard>
@@ -61,7 +60,8 @@ const ForgotPassword = () => {
     <AuthCard title="Forgot your password?" subtitle="We'll email you a link to reset it">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <Input label="Email" type="email" placeholder="you@company.com" error={errors.email?.message} {...register("email")} />
-        <Button type="submit" loading={loading} className="w-full" size="lg">
+        <TurnstileWidget onVerify={handleVerify} onExpire={handleExpire} />
+        <Button type="submit" loading={loading} disabled={!turnstileToken}  className="w-full" size="lg">
           Send reset link
         </Button>
       </form>
