@@ -8,14 +8,23 @@ import Input from "../../components/ui/Input";
 import Textarea from "../../components/ui/Textarea";
 import Button from "../../components/ui/Button";
 import { useReveal } from "../../hooks/useReveal";
+import { useCallback } from "react";
+import TurnstileWidget from "../../components/ui/TurnstileWidget";
+import toast from "react-hot-toast";
 
 const CONTACT_DETAILS = [
-  { label: "Email", value: "info@sportshubegypt.com", href: "mailto:info@sportshubegypt.com",
-    icon: "M3 8l9 6 9-6M3 8v10a2 2 0 002 2h14a2 2 0 002-2V8M3 8l9-5 9 5" },
-  { label: "Phone", value: "+20 110 380 8400", href: "tel:+201103808400",
-    icon: "M3 5a2 2 0 012-2h2.28a1 1 0 01.98.79l1 4a1 1 0 01-.27.95L7.6 10.15a12 12 0 006.25 6.25l1.41-1.41a1 1 0 01.95-.27l4 1a1 1 0 01.79.98V19a2 2 0 01-2 2h-1C8.61 21 3 15.39 3 8V5z" },
-  { label: "Address", value: "134 Tawoynat Smouha, First Floor, Alexandria, Egypt",
-    icon: "M17.66 10.34a5.66 5.66 0 11-11.32 0C6.34 6 12 2 12 2s5.66 4 5.66 8.34zM12 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" },
+  {
+    label: "Email", value: "info@sportshubegypt.com", href: "mailto:info@sportshubegypt.com",
+    icon: "M3 8l9 6 9-6M3 8v10a2 2 0 002 2h14a2 2 0 002-2V8M3 8l9-5 9 5"
+  },
+  {
+    label: "Phone", value: "+20 110 380 8400", href: "tel:+201103808400",
+    icon: "M3 5a2 2 0 012-2h2.28a1 1 0 01.98.79l1 4a1 1 0 01-.27.95L7.6 10.15a12 12 0 006.25 6.25l1.41-1.41a1 1 0 01.95-.27l4 1a1 1 0 01.79.98V19a2 2 0 01-2 2h-1C8.61 21 3 15.39 3 8V5z"
+  },
+  {
+    label: "Address", value: "134 Tawoynat Smouha, First Floor, Alexandria, Egypt",
+    icon: "M17.66 10.34a5.66 5.66 0 11-11.32 0C6.34 6 12 2 12 2s5.66 4 5.66 8.34zM12 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
+  },
 ];
 
 const schema = yup.object({
@@ -28,13 +37,17 @@ const schema = yup.object({
 const Contact = () => {
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const handleVerify = useCallback((token) => setTurnstileToken(token), []);
+  const handleExpire = useCallback(() => setTurnstileToken(""), []);
   const { ref: detailsRef, isVisible } = useReveal();
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async (values) => {
+    if (!turnstileToken) { toast.error("Please complete the verification check."); return; }
     setSending(true);
     try {
-      await contactApi.submitMessage(values);
+      await contactApi.submitMessage({ ...values, turnstileToken });
       setSent(true);
     } catch (err) {
       toast.error(err.response?.data?.message || "Couldn't send your message. Please try again.");
@@ -96,7 +109,8 @@ const Contact = () => {
               </div>
               <Input label="Subject" error={errors.subject?.message} {...register("subject")} />
               <Textarea label="Message" rows={5} error={errors.message?.message} {...register("message")} />
-              <Button type="submit" size="lg" loading={sending} className="w-full">Send Message</Button>
+              <TurnstileWidget onVerify={handleVerify} onExpire={handleExpire} />
+              <Button type="submit" size="lg" loading={sending} disabled={!turnstileToken} className="w-full">Send Message</Button>
             </form>
           )}
         </div>
