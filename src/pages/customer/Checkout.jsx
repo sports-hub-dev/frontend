@@ -17,8 +17,8 @@ import { authApi } from "../../api/auth.api";
 import { fetchCurrentUser } from "../../app/authSlice";
 
 const PAYMENT_METHODS = [
-  { value: "aps", label: "Amazon Payment Services", desc: "Cards, wallets & local payment methods" },
-  { value: "stripe", label: "Credit / Debit Card (Stripe)", desc: "Secure hosted payment page" },
+  { value: "aps", label: "Pay with your local Egyptian card", desc: "Cards, wallets & local payment methods" },
+  { value: "stripe", label: "International Credit / Debit Card", desc: "Secure hosted payment page" },
 ];
 
 // Both gateways are now hosted-redirect flows — build a form and POST for
