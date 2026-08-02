@@ -32,7 +32,7 @@ const ForgotPassword = () => {
     if (!turnstileToken) { toast.error("Please complete the verification check."); return; }
     setLoading(true);
     try {
-      await authApi.forgotPassword({ ...email, turnstileToken });
+      await authApi.forgotPassword({ email, turnstileToken });
     } finally {
       // Always show the same confirmation, regardless of whether the email exists,
       // to avoid leaking which addresses are registered.
