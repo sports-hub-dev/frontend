@@ -111,7 +111,7 @@ const Home = () => {
                 </div>
                 <div className={reversed ? "sm:order-1" : ""}>
                   <p className="text-center text-xs font-medium uppercase tracking-[0.2em] text-amber-600">{panel.eyebrow}</p>
-                  <h3 className="text-center mt-4 font-editorial text-xl italic leading-tight text-navy-900 sm:text-4xl">
+                  <h3 className="text-center mt-4 font-editorial text-3xl italic leading-tight text-navy-900 sm:text-2xl">
                     {panel.title}
                   </h3>
                   <p className="text-center mt-4 font-editorial max-w-* leading-relaxed text-navy-500">{panel.copy}</p>
