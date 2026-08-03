@@ -18,10 +18,10 @@ const STORY_PANELS = [
     image: "https://res.cloudinary.com/dsfa43amy/image/upload/v1784385598/8cd4d8c7-8f28-4fa9-984e-ae7f467260d1.png",
   },
   {
-    eyebrow: "Comfort",
-    title: "Built for a full shift.",
-    copy: "Breathable, four-way stretch fabrics move with the job — loading, driving, walking — so comfort holds up well past hour eight.",
-    image: "https://res.cloudinary.com/dsfa43amy/image/upload/v1784385695/d9fe1bf9-0b87-4c96-8734-ec404af5f51d.png",
+    eyebrow: "Padel",
+    title: "Designed for the fastest-growing sport.",
+    copy: "From performance apparel to custom teamwear and accessories, Sportshub delivers premium padel solutions for clubs, academies, tournaments, and players.",
+    image: "https://res.cloudinary.com/dsfa43amy/image/upload/v1785761159/Padel_r2sgcp.png",
   },
   {
     eyebrow: "Durability",
