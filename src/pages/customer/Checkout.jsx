@@ -15,9 +15,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authApi } from "../../api/auth.api";
 import { fetchCurrentUser } from "../../app/authSlice";
+import PaymobIframe from "../../components/payment/PaymobIframe";
 
 const PAYMENT_METHODS = [
-  { value: "aps", label: "Pay with your local Egyptian card", desc: "Cards, wallets & local payment methods" },
+  { value: "paymob", label: "Paymob", desc: "Egyptian Cards, wallets & local payment methods" },
   { value: "stripe", label: "International Credit / Debit Card", desc: "Secure hosted payment page" },
 ];
 
@@ -45,6 +46,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { items, promo, clearCart } = useCart();
+  const [paymobIframeUrl, setPaymobIframeUrl] = useState(null);
 
   const [paymentMethod, setPaymentMethod] = useState("aps");
   const [placingOrder, setPlacingOrder] = useState(false);
@@ -126,9 +128,9 @@ const Checkout = () => {
       if (paymentMethod === "stripe") {
         const { data } = await paymentsApi.createStripeOrder(buildOrderPayload(address));
         window.location.href = data.data.stripe.checkoutUrl;
-      } else {
-        const { data } = await paymentsApi.createApsOrder(buildOrderPayload(address));
-        redirectToAps(data.data.aps);
+      } else if (paymentMethod === "paymob") {
+        const { data } = await paymentsApi.createPaymobOrder(buildOrderPayload(address));
+        setPaymobIframeUrl(data.data.paymob.iframeUrl);
       }
     } catch (err) {
       setPlacingOrder(false);
@@ -234,6 +236,7 @@ const Checkout = () => {
           <CartSummary readonly />
         </div>
       </div>
+      {paymobIframeUrl && <PaymobIframe iframeUrl={paymobIframeUrl} onClose={() => setPaymobIframeUrl(null)} />}
     </div>
   );
 };
