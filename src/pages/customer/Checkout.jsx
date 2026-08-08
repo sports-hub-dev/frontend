@@ -25,20 +25,20 @@ const PAYMENT_METHODS = [
 // Both gateways are now hosted-redirect flows — build a form and POST for
 // APS (it requires a signed set of fields), a plain redirect for Stripe
 // (it just needs the URL Stripe's Checkout Session already gives us).
-const redirectToAps = ({ checkoutUrl, formFields }) => {
-  const form = document.createElement("form");
-  form.method = "POST";
-  form.action = checkoutUrl;
-  Object.entries(formFields).forEach(([key, value]) => {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = key;
-    input.value = value;
-    form.appendChild(input);
-  });
-  document.body.appendChild(form);
-  form.submit();
-};
+// const redirectToAps = ({ checkoutUrl, formFields }) => {
+//   const form = document.createElement("form");
+//   form.method = "POST";
+//   form.action = checkoutUrl;
+//   Object.entries(formFields).forEach(([key, value]) => {
+//     const input = document.createElement("input");
+//     input.type = "hidden";
+//     input.name = key;
+//     input.value = value;
+//     form.appendChild(input);
+//   });
+//   document.body.appendChild(form);
+//   form.submit();
+// };
 
 const Checkout = () => {
   const dispatch = useDispatch();
