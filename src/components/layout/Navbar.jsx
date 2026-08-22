@@ -6,6 +6,8 @@ import { useCart } from "../../hooks/useCart";
 import { cn } from "../../utils/cn";
 import Logo from "./Logo";
 import toast from "react-hot-toast";
+import { SPECIAL_VENDORS, getEntityId } from "../../constants/specialVendors";
+import { buildRoute } from "../../constants/routes";
 
 const NAV_LINKS = [
   { to: ROUTES.HOME, label: "Home" },
@@ -23,6 +25,7 @@ const Navbar = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const { isAuthenticated, user, isPendingApproval, logout } = useAuth();
+  const matchedVendor = SPECIAL_VENDORS.find((v) => v.id === getEntityId(user?.vendorId));
   const { count } = useCart();
 
   useEffect(() => {
@@ -87,6 +90,15 @@ const Navbar = () => {
               )}
             </NavLink>
           ))}
+          {matchedVendor && (
+            <NavLink
+              to={buildRoute(ROUTES.VENDOR_PRODUCTS, { vendorId: matchedVendor.id })}
+              className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-500 hover:text-navy-900"
+            >
+              {matchedVendor.name} Products
+            </NavLink>
+          )}
+
         </nav>
 
         <div className="flex items-center gap-2">
@@ -195,6 +207,14 @@ const Navbar = () => {
               {link.label}
             </NavLink>
           ))}
+          {matchedVendor && (
+            <NavLink
+              to={buildRoute(ROUTES.VENDOR_PRODUCTS, { vendorId: matchedVendor.id })}
+              className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-500 hover:text-navy-900"
+            >
+              {matchedVendor.name} Products
+            </NavLink>
+          )}
           {!isAuthenticated && (
             <div className="mt-2 flex gap-2 border-t border-navy-100 pt-3">
               <NavLink to={ROUTES.LOGIN} className="flex-1 rounded-lg border border-navy-200 px-3.5 py-2.5 text-center text-sm font-medium text-navy-700">

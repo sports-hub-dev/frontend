@@ -7,6 +7,8 @@ import Select from "../../components/ui/Select";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { usePagination } from "../../hooks/usePagination";
+import { SPECIAL_VENDOR_IDS, getEntityId } from "../../constants/specialVendors";
+
 
 const SORT_OPTIONS = [
   { value: "newest", label: "Newest" },
@@ -72,7 +74,7 @@ const Products = () => {
     productsApi
       .getProducts({ page, limit, category: category || undefined, minPrice: minPrice || undefined, maxPrice: maxPrice || undefined, sort })
       .then(({ data }) => {
-        setProducts(data.data);
+        setProducts(data.data.filter((p) => !SPECIAL_VENDOR_IDS.includes(getEntityId(p.vendorId))));
         setMeta(data.meta);
       })
       .catch(() => setProducts([]))

@@ -18,7 +18,7 @@ export const ROUTES = {
   VERIFY_EMAIL: "/verify-email/:token",
   BUNDLES: "/bundles",
   BUNDLE_DETAIL: "/bundles/:id",
-  
+  VENDOR_PRODUCTS: "/vendor/:vendorId",
 
   CART: "/cart",
   CHECKOUT: "/checkout",

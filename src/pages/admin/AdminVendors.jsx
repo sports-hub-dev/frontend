@@ -110,7 +110,7 @@ const AdminVendors = () => {
                     <p className="font-semibold text-navy-900">{v.name}</p>
                     <Badge tone={v.isActive ? "success" : "danger"}>{v.isActive ? "Active" : "Suspended"}</Badge>
                   </div>
-                  <p className="text-sm text-navy-400">{v.email} · Commission: {v.commissionRate}%</p>
+                  <p className="text-sm text-navy-400">{v.email}</p>
                 </div>
                 <div className="flex shrink-0 items-center gap-2" onClick={(e) => e.stopPropagation()}>
                   <Button size="sm" variant="outline" onClick={() => setFormModal({ open: true, vendor: v })}>Edit</Button>
