@@ -95,7 +95,7 @@ const Navbar = () => {
               to={buildRoute(ROUTES.VENDOR_PRODUCTS, { vendorId: matchedVendor.id })}
               className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-500 hover:text-navy-900"
             >
-              {matchedVendor.name} Products
+              {matchedVendor.name} Uniforms
             </NavLink>
           )}
 
@@ -212,7 +212,7 @@ const Navbar = () => {
               to={buildRoute(ROUTES.VENDOR_PRODUCTS, { vendorId: matchedVendor.id })}
               className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-500 hover:text-navy-900"
             >
-              {matchedVendor.name} Products
+              {matchedVendor.name} Uniforms
             </NavLink>
           )}
           {!isAuthenticated && (
