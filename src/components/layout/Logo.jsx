@@ -14,7 +14,7 @@ import logoWhiteFull from "../../assets/logo-white.png";
  * `dark` is kept for existing callers and maps to "white".
  */
 const SOURCES = { color: logo, white: logoWhite, full: logoWhiteFull };
-const HEIGHTS = { color: "h-10", white: "h-11", full: "h-16" };
+const HEIGHTS = { color: "h-10", white: "h-12", full: "h-16" };
 
 const Logo = ({ dark = false, variant, className }) => {
   const kind = variant || (dark ? "white" : "color");
