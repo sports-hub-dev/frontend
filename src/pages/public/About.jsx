@@ -1,175 +1,294 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import Button from "../../components/ui/Button";
 import { useReveal } from "../../hooks/useReveal";
+import RegionMap from "../../components/about/RegionMap";
+import useCountUp from "../../hooks/useCountUp";
 
-const PRODUCT_LINES = [
-  { name: "Biker Uniforms", detail: "Long-sleeve t-shirts and pants, engineered for mobility and adaptive to the Gulf climate — Oeko-Tex 100 certified fabrics." },
-  { name: "4-Wheeler Uniforms", detail: "Polo shirts and durable trousers designed for comfort during extended shifts behind the wheel." },
-  { name: "Jackets", detail: "All-weather protection with breathable, water-resistant finishes that keep riders dry and cool." },
-  { name: "Safety Vests", detail: "High-visibility, EN ISO 20471-compliant vests for on-road and warehouse environments." },
-  { name: "Safety Shoes", detail: "Impact- and slip-resistant footwear for delivery riders and warehouse staff alike." },
-  { name: "Helmets", detail: "Protective headgear manufactured in strict compliance with applicable safety and certification standards." },
+const IMG = {
+  visibility: "https://res.cloudinary.com/dsfa43amy/image/upload/v1784385598/8cd4d8c7-8f28-4fa9-984e-ae7f467260d1.png",
+  jacket: "https://res.cloudinary.com/dsfa43amy/image/upload/v1784385791/2ca85078-9dd2-42c6-84d6-7af661d0c56c.png",
+  truck: "https://res.cloudinary.com/dsfa43amy/image/upload/v1784941567/752652639_1573384814500064_6403601339349822122_n_dr8opg.jpg",
+  stock: "https://res.cloudinary.com/dsfa43amy/image/upload/v1784941567/751665757_1427493726067978_4485987897282091929_n_bkduzc.jpg",
+};
+
+const PORTFOLIO = [
+  { title: "Biker Uniforms", desc: "Long-sleeve t-shirts and pants, engineered for mobility and adaptive to the Gulf climate — Oeko-Tex 100 certified fabrics.", img: IMG.visibility, bg: "bg-navy-500", fit: "tall" },
+  { title: "4-Wheeler Uniforms", desc: "Polo shirts and durable trousers designed for comfort during extended shifts behind the wheel.", img: IMG.truck, bg: "bg-navy-900", fit: "cover" },
+  { title: "Jackets", desc: "All-weather protection with breathable, water-resistant finishes that keep riders dry and cool.", img: IMG.jacket, bg: "bg-[#F4F4F4]", fit: "tall" },
+  { title: "Safety Vests", desc: "High-visibility, EN ISO 20471-compliant vests for on-road and warehouse environments.", bg: "bg-amber-700" },
+  { title: "Safety Shoes", desc: "Impact- and slip-resistant footwear for delivery riders and warehouse staff alike.", bg: "bg-navy-700" },
+  { title: "Helmets", desc: "Protective headgear manufactured in strict compliance with applicable safety and certification standards.", bg: "bg-navy-900" },
 ];
 
-const CAPABILITIES = [
-  { stat: "1-month", label: "Lead time from order to delivery" },
-  { stat: "3", label: "Countries served across the AMET region" },
-  { stat: "250K+", label: "Combined annual unit capacity" },
+const photo = (src, cap, alt, w = 420) => ({ type: "photo", src, cap, alt, w });
+const chapter = (word, ar, desc) => ({ type: "chapter", word, ar, desc });
+const GALLERY = [
+  { type: "intro" },
+  photo("/images/factory-front.webp", "The factory, Egypt", "Front of the factory building", 460),
+  chapter("Cut.", "قص", "Fabric is stacked, marked and cut in layers so every piece in an order matches."),
+  photo("/images/hero-cutting.webp", "Layered cutting", "Worker cutting stacked navy fabric with a straight knife"),
+  photo("/images/factory-cutting-glove.webp", "Cut-resistant gloves on every table", "Close-up of a cutter with a chain-mail glove"),
+  photo("/images/factory-cutting-floor.webp", "The cutting floor", "Team working at the cutting tables", 460),
+  chapter("Stitch.", "تطريز", "Multi-head machines embroider logos onto quilted jackets, many at once."),
+  photo("/images/factory-embroidery-line.webp", "Embroidery line", "Row of multi-head embroidery machines", 460),
+  photo("/images/factory-embroidery-closeup.webp", "Your logo, stitched in", "Embroidery head stitching a logo on navy fabric"),
+  chapter("Finish.", "تشطيب", "Every jacket is pressed and checked before it leaves the floor."),
+  photo("/images/factory-pressing.webp", "Pressing and final check", "Hands pressing a blue delivery jacket"),
+  chapter("Pack.", "تعبئة", "Sorted by size and type, boxed, labelled and stored until it ships."),
+  photo("/images/warehouse-made-in-egypt.webp", "Made in Egypt", "Labelled boxes in the warehouse"),
+  photo("/images/warehouse-boxes.webp", "Ready to ship", "Sports Hub branded boxes stacked in the warehouse cage"),
+  { type: "cta" },
 ];
 
-const COVERAGE = [
-  { country: "Egypt", volume: "up to 30,000 units annually", note: "Biker &amp; 4-wheeler uniforms, jackets, safety vests and helmets" },
-  { country: "Saudi Arabia", volume: "up to 90,000 units annually", note: "Scalable production capacity to meet fluctuating demand" },
-  { country: "United Arab Emirates", volume: "up to 130,000 units annually", note: "Regional inventory pinning for fast, reliable delivery" },
-];
+const Stat = ({ target, suffix, label, start, first }) => {
+  const value = useCountUp(target, start);
+  return (
+    <div className={`flex flex-col gap-2.5 border-l-2 px-8 py-5 ${first ? "border-amber" : "border-navy-500"}`}>
+      <span className="font-editorial text-6xl font-semibold leading-none text-amber lg:text-[88px]">{value}{suffix}</span>
+      <span className="text-[15px] text-navy-100">{label}</span>
+    </div>
+  );
+};
+
+const GalleryItem = ({ item }) => {
+  if (item.type === "intro") {
+    return (
+      <div className="flex h-[560px] w-[440px] max-w-[85vw] shrink-0 flex-col justify-center gap-5 pr-5">
+        <span className="text-[13px] font-semibold uppercase tracking-[0.22em] text-amber">Inside the Factory</span>
+        <h2 className="font-editorial text-5xl font-semibold leading-none sm:text-6xl">From fabric to your team.</h2>
+        <p className="text-[17px] leading-relaxed text-navy-100">Keep scrolling to follow a uniform through the line, from the cutting table to the box it ships in.</p>
+      </div>
+    );
+  }
+  if (item.type === "cta") {
+    return (
+      <div className="flex h-[560px] w-[420px] max-w-[85vw] shrink-0 flex-col justify-end gap-4 rounded-3xl bg-amber p-10 text-navy-900">
+        <span className="font-editorial text-5xl font-semibold leading-none">Want to see it in person?</span>
+        <span className="text-base leading-relaxed">Book a visit or ask for samples with your logo.</span>
+        <Link to={ROUTES.CONTACT} className="self-start rounded-full bg-navy-900 px-6 py-3.5 font-semibold text-white">Contact us</Link>
+      </div>
+    );
+  }
+  if (item.type === "chapter") {
+    return (
+      <div className="flex h-[560px] w-[340px] max-w-[80vw] shrink-0 flex-col justify-between rounded-3xl border border-navy-700 bg-navy-900 p-9">
+        <span className="text-right text-4xl font-bold text-navy-500" dir="rtl" lang="ar">{item.ar}</span>
+        <span className="flex flex-col gap-4">
+          <span className="font-editorial text-[88px] font-semibold leading-[0.9] text-amber">{item.word}</span>
+          <span className="text-base leading-relaxed text-navy-100">{item.desc}</span>
+        </span>
+      </div>
+    );
+  }
+  return (
+    <figure className="sh-hs-frame relative m-0 h-[560px] max-w-[85vw] shrink-0 overflow-hidden rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,.5)]" style={{ width: item.w }}>
+      <img src={item.src} alt={item.alt} loading="lazy" className="block h-full w-full object-cover" />
+      <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-ink/90 to-transparent p-5 text-[15px] font-semibold text-white">{item.cap}</figcaption>
+    </figure>
+  );
+};
 
 const About = () => {
-  const { ref: lineRef, isVisible: lineVisible } = useReveal();
-  const { ref: coverageRef, isVisible: coverageVisible } = useReveal();
+  const [openPanel, setOpenPanel] = useState(0);
+  const [warehousesOn, setWarehousesOn] = useState(false);
+  const { ref: statsRef, isVisible: statsVisible } = useReveal({ threshold: 0.3 });
+
+  const toggleWarehouses = () => {
+    setWarehousesOn((on) => {
+      if (!on) document.getElementById("sh-map")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return !on;
+    });
+  };
 
   return (
-    <div>
-      {/* Hero */}
-      <section className="bg-navy-900 py-16 sm:py-20">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
-          <span className="stamp bg-amber/15 text-amber ring-1 ring-inset ring-amber/30">Who We Are</span>
-          <h1 className="mt-5 animate-fadeUp font-display text-2xl font-bold text-white sm:text-4xl">
-            Personal protective equipment, purpose-built for delivery.
-          </h1>
-          <p className="mt-5 animate-fadeUp text-sm leading-relaxed text-navy-200 sm:text-base" style={{ animationDelay: "80ms" }}>
-            Sportshub is the commercial brand used by Outfit Theory Readymade Garments Trading L.L.C S.O.C for its UAE e-commerce operations in uniforms, workwear and personal protective equipment.
-
-            Sports Hub specializes in delivering high-performance personal protective equipment (PPE) and uniforms to fulfil the specific needs of demanding environments. Our regional capabilities span Egypt, Saudi Arabia, and the United Arab Emirates (UAE) — manufactured and owned by controlled warehousing, ensuring a seamless and robust supply chain for Amazon's DSP operations.
+    <div className="bg-navy-50">
+      {/* ── Hero ────────────────────────────────────────────────────────── */}
+      <section className="relative flex min-h-[720px] items-end overflow-hidden bg-navy-ink text-white">
+        <img src="/images/factory-embroidery-hall.webp" alt="Embroidery section of the Sports Hub factory" className="sh-kb absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-ink via-navy-ink/60 to-navy-ink/30" />
+        <div className="relative mx-auto flex w-full max-w-7xl flex-wrap items-end justify-between gap-10 px-6 pb-20 sm:px-8">
+          <div className="flex min-w-0 flex-[1_1_620px] flex-col gap-5">
+            <span className="sh-mask"><span className="sh-line block text-[13px] font-semibold uppercase tracking-[0.22em] text-amber">Who We Are</span></span>
+            <h1 className="font-editorial text-5xl font-semibold leading-none tracking-tight sm:text-7xl lg:text-[88px]">
+              <span className="sh-mask"><span className="sh-line block">Personal protective</span></span>
+              <span className="sh-mask"><span className="sh-line block" style={{ animationDelay: ".12s" }}>equipment, purpose-built</span></span>
+              <span className="sh-mask"><span className="sh-line block" style={{ animationDelay: ".24s" }}>for delivery.</span></span>
+            </h1>
+          </div>
+          <p className="sh-rise min-w-0 max-w-md flex-[1_1_360px] text-[17px] leading-relaxed text-navy-100" style={{ "--sh-step": ".4s" }}>
+            Sports Hub specializes in delivering high-performance personal protective equipment (PPE) and uniforms to fulfil the specific needs of demanding environments. Our regional capabilities span Egypt, Saudi Arabia, and the United Arab Emirates (UAE) — manufactured and owned by controlled warehousing, ensuring a seamless and robust supply chain for Amazon's DSP operations. Beyond delivery, we supply uniforms and workwear to businesses in Kuwait, Bahrain and Qatar.
           </p>
         </div>
       </section>
 
-      {/* Capabilities strip */}
-      <section className="border-b border-navy-100 bg-white py-10">
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 text-center sm:grid-cols-3 sm:px-6">
-          {CAPABILITIES.map((c) => (
-            <div key={c.label}>
-              <p className="font-display text-3xl font-bold text-navy-900">{c.stat}</p>
-              <p className="mt-1 text-sm text-navy-400">{c.label}</p>
-            </div>
-          ))}
+      {/* ── Stats ───────────────────────────────────────────────────────── */}
+      <section ref={statsRef} className="bg-navy-900 px-6 py-16 text-white sm:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-y-6 md:grid-cols-3">
+          <Stat first target={1} suffix="-month" label="Lead time from order to delivery" start={statsVisible} />
+          <Stat target={6} suffix="" label="Countries served across Egypt and the Gulf" start={statsVisible} />
+          <Stat target={250} suffix="K+" label="Combined annual unit capacity" start={statsVisible} />
         </div>
       </section>
 
-      {/* Product portfolio */}
-      <section ref={lineRef} className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-wider text-amber-600">Scope Coverage</p>
-          <h2 className="mt-1 font-display text-2xl font-bold text-navy-900">Product Portfolio</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-navy-500">
-            A full range of uniforms and PPE, engineered for performance, safety, and comfort — designed to hold up
-            to the demands of daily delivery routes.
-          </p>
-        </div>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {PRODUCT_LINES.map((line, i) => (
-            <div
-              key={line.name}
-              className={`rounded-2xl border border-navy-100 bg-white p-6 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift sm:text-left ${lineVisible ? "animate-fadeUp" : "opacity-0"}`}
-              style={{ animationDelay: `${i * 70}ms` }}
-            >
-              <h3 className="font-display text-sm font-semibold text-navy-900 sm:text-base">{line.name}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-navy-500 sm:text-sm">{line.detail}</p>
+      {/* ── Product portfolio: expanding panels ─────────────────────────── */}
+      <section className="px-6 py-28 sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-10">
+          <div className="sh-reveal flex flex-wrap items-end justify-between gap-6">
+            <div className="flex flex-col gap-3">
+              <span className="text-[13px] font-semibold uppercase tracking-[0.22em] text-amber-700">Scope Coverage</span>
+              <h2 className="font-editorial text-4xl font-semibold leading-none text-navy-900 sm:text-6xl">Product Portfolio</h2>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Coverage / manifest style map summary */}
-      <section ref={coverageRef} className="bg-navy-900 py-16">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-wider text-amber">Volume Readiness</p>
-            <h2 className="mt-1 font-display text-2xl font-bold text-white">AMET Regional Coverage</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-sm text-navy-300">
-              Our production model is built to scale 2x to 3x during peak periods, without compromising quality or
-              delivery timelines.
+            <p className="max-w-md text-[17px] leading-relaxed text-navy-500">
+              A full range of uniforms and PPE, engineered for performance, safety, and comfort — designed to hold up to the demands of daily delivery routes.
             </p>
           </div>
-          <div className="mt-10 space-y-3">
-            {COVERAGE.map((c, i) => (
-              <div
-                key={c.country}
-                className={`flex flex-col justify-between gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-center sm:flex-row sm:items-center sm:text-left ${coverageVisible ? "animate-fadeUp" : "opacity-0"}`}
-                style={{ animationDelay: `${i * 90}ms` }}
+          <div className="flex flex-col gap-3 md:min-h-[480px] md:flex-row">
+            {PORTFOLIO.map((p, i) => {
+              const open = openPanel === i;
+              return (
+                <button
+                  key={p.title}
+                  type="button"
+                  onClick={() => setOpenPanel(i)}
+                  onMouseEnter={() => setOpenPanel(i)}
+                  aria-expanded={open}
+                  className={`sh-panel relative flex min-h-[160px] items-end overflow-hidden rounded-3xl p-7 text-left md:min-h-[480px] md:min-w-[110px] ${p.bg}`}
+                  style={{ flexGrow: open ? 5 : 1, flexBasis: 0 }}
+                >
+                  {p.img && (
+                    <img
+                      src={p.img}
+                      alt=""
+                      className={`sh-panel-img absolute ${p.fit === "tall" ? "bottom-0 left-1/2 h-full w-auto -translate-x-1/2" : "inset-0 h-full w-full object-cover"}`}
+                      style={{ opacity: open ? 1 : 0.45 }}
+                    />
+                  )}
+                  <span className="absolute inset-0 bg-gradient-to-t from-navy-ink/90 via-navy-ink/20 to-transparent" />
+                  <span className="relative flex flex-col gap-3">
+                    <span className="text-[13px] font-bold tracking-[0.14em] text-amber">0{i + 1}</span>
+                    <span className="font-editorial text-[26px] font-semibold leading-tight text-white">{p.title}</span>
+                    {open && <span className="sh-panel-copy max-w-sm text-[15px] leading-relaxed text-navy-100">{p.desc}</span>}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Regional coverage map ───────────────────────────────────────── */}
+      <section className="overflow-hidden bg-navy-ink px-6 py-28 text-white sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-11">
+          <div className="sh-reveal flex max-w-3xl flex-col gap-3.5">
+            <span className="text-[13px] font-semibold uppercase tracking-[0.22em] text-amber">Volume Readiness</span>
+            <h2 className="font-editorial text-4xl font-semibold leading-none sm:text-6xl">Regional Coverage</h2>
+            <p className="text-[17px] leading-relaxed text-navy-100">
+              Our production model is built to scale 2x to 3x during peak periods, without compromising quality or delivery timelines.
+            </p>
+          </div>
+          <RegionMap warehousesOn={warehousesOn} onToggleWarehouses={toggleWarehouses} />
+
+          {/* Inside the operation */}
+          <div className="mt-16 flex flex-col gap-6">
+            <span className="sh-reveal text-[13px] font-semibold uppercase tracking-[0.22em] text-navy-300">Inside the Operation</span>
+            <div className="sh-reel grid grid-cols-1 gap-5 md:grid-cols-3">
+              <figure className="sh-shot relative m-0 h-[340px] -rotate-2 overflow-hidden rounded-3xl">
+                <img src="/images/factory-embroidery-closeup.webp" alt="Embroidery machine stitching a logo on a quilted jacket" loading="lazy" className="block h-full w-full object-cover" />
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-ink/90 to-transparent px-5 py-5 font-editorial text-[22px] font-semibold">Production floor</figcaption>
+              </figure>
+              <button
+                type="button"
+                onClick={toggleWarehouses}
+                aria-pressed={warehousesOn}
+                className={`sh-shot relative block h-[340px] w-full translate-y-0 rotate-[1.5deg] overflow-hidden rounded-3xl border-2 text-left md:translate-y-6 ${warehousesOn ? "border-amber" : "border-transparent"}`}
               >
-                <div>
-                  <p className="font-display text-sm font-semibold text-white">{c.country}</p>
-                  <p className="mt-0.5 text-xs text-navy-300" dangerouslySetInnerHTML={{ __html: c.note }} />
-                </div>
-                <span className="tracking-code shrink-0 text-xs font-semibold text-amber">{c.volume}</span>
+                <img src="/images/warehouse-boxes.webp" alt="Sports Hub boxes in the warehouse cage" loading="lazy" className="block h-full w-full object-cover" />
+                <span className="absolute right-3.5 top-3.5 flex items-center gap-2 rounded-full bg-navy-ink/85 px-3 py-1.5 text-xs font-semibold">
+                  <span className={`sh-dotlive block h-2 w-2 rounded-full ${warehousesOn ? "bg-[#FFD58A]" : "bg-navy-300"}`} />
+                  {warehousesOn ? "Lit on the map" : "Tap to light up on the map"}
+                </span>
+                <span className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 bg-gradient-to-t from-navy-ink/95 to-transparent px-5 py-5">
+                  <span className="font-editorial text-[22px] font-semibold">Warehouse stock</span>
+                  <span className="flex flex-wrap gap-1.5">
+                    {["Egypt", "KSA", "UAE"].map((c) => <span key={c} className="rounded-full bg-amber px-2.5 py-1 text-xs font-semibold text-navy-900">{c}</span>)}
+                  </span>
+                </span>
+              </button>
+              <figure className="sh-shot relative m-0 h-[340px] -rotate-1 overflow-hidden rounded-3xl">
+                <img src={IMG.truck} alt="Sports Hub boxes loaded onto a truck" loading="lazy" className="block h-full w-full object-cover" />
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-ink/90 to-transparent px-5 py-5 font-editorial text-[22px] font-semibold">Loading for delivery</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Factory gallery: scrolls sideways as you scroll down ────────── */}
+      <section className="sh-hs border-t border-navy-700 bg-navy-ink text-white" aria-label="Inside the factory">
+        <div className="sh-hs-sticky">
+          <div className="sh-hs-track">
+            {GALLERY.map((item, i) => <GalleryItem key={i} item={item} />)}
+          </div>
+          <div aria-hidden="true" className="absolute inset-x-[6vw] bottom-8 h-[3px] rounded bg-navy-700">
+            <div className="sh-hs-bar h-full rounded bg-amber" />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Promises ────────────────────────────────────────────────────── */}
+      <section className="px-6 py-28 sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-12">
+          <div className="relative h-1 rounded bg-navy-100"><div className="sh-draw absolute inset-0 rounded bg-navy-900" /></div>
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+            {[
+              ["1", "mo", "Swift Turnaround", "Committed to a 1-month lead time from order delivery, ensuring operational needs are met promptly."],
+              ["3", "mo", "Innovation Pipeline", "A dedicated 3-month new product development (NPD) process to bring cutting-edge solutions to market."],
+              ["✓", "", "Production Excellence", "A production cycle built on post-sample approval, guaranteeing consistent, dependable quality."],
+            ].map(([n, u, t, d]) => (
+              <div key={t} className="sh-reveal flex flex-col gap-3.5 text-navy-900">
+                <span className="font-editorial text-7xl font-semibold leading-none">{n}<span className="text-3xl">{u}</span></span>
+                <h3 className="text-[22px] font-semibold">{t}</h3>
+                <p className="text-base leading-relaxed text-navy-500">{d}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Lead time / development */}
-      <section className="text-center mx-auto max-w-5xl px-4 py-16 sm:px-6">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
-          <div>
-            <h3 className="font-display text-base font-semibold text-navy-900">Swift Turnaround</h3>
-            <p className="mt-2 text-sm leading-relaxed text-navy-500">
-              Committed to a 1-month lead time from order delivery, ensuring operational needs are met promptly.
-            </p>
+      {/* ── Sustainability ──────────────────────────────────────────────── */}
+      <section id="sustainability" className="relative overflow-hidden border-t border-navy-700 bg-navy-900 px-6 py-28 text-white sm:px-8">
+        <div aria-hidden="true">
+          {[["8%", 18, 0], ["18%", 34, 2.5], ["31%", 12, 5], ["47%", 26, 1.2], ["62%", 16, 6.4], ["74%", 40, 3.6], ["88%", 20, 7.5]].map(([l, s, d]) => (
+            <span key={l} className="sh-bubble" style={{ left: l, width: s, height: s, animationDelay: `${d}s` }} />
+          ))}
+        </div>
+        <div className="relative mx-auto flex max-w-7xl flex-wrap gap-14">
+          <div className="sh-reveal flex min-w-0 flex-[1_1_380px] flex-col gap-4">
+            <span className="text-[13px] font-semibold uppercase tracking-[0.22em] text-amber">Environmental &amp; Social Responsibility</span>
+            <h2 className="font-editorial text-4xl font-semibold leading-none sm:text-6xl">Our Commitment to Sustainability</h2>
+            <span className="mt-3 self-start rounded-full border border-amber/45 bg-amber/10 px-5 py-3 text-sm font-semibold text-amber-300">
+              CO₂ removal supported with every purchase
+            </span>
           </div>
-          <div>
-            <h3 className="font-display text-base font-semibold text-navy-900">Innovation Pipeline</h3>
-            <p className="mt-2 text-sm leading-relaxed text-navy-500">
-              A dedicated 3-month new product development (NPD) process to bring cutting-edge solutions to market.
-            </p>
-          </div>
-          <div>
-            <h3 className="font-display text-base font-semibold text-navy-900">Production Excellence</h3>
-            <p className="mt-2 text-sm leading-relaxed text-navy-500">
-              A production cycle built on post-sample approval, guaranteeing consistent, dependable quality.
-            </p>
+          <div className="sh-reveal flex min-w-0 flex-[1_1_460px] flex-col gap-4 text-base leading-[1.7] text-navy-100">
+            <p>At SportsHub, we believe that business growth should go hand in hand with environmental and social responsibility. We are committed to supporting responsible sourcing, promoting transparency throughout our supply chain, and working with partners who uphold high standards of quality, ethics, and compliance.</p>
+            <p>We continuously seek opportunities to improve operational efficiency, reduce environmental impact, and encourage responsible manufacturing practices wherever possible. Sustainability is an ongoing journey, and we remain committed to making meaningful improvements as our business continues to grow.</p>
+            <p>As part of our commitment to sustainability, OUTFIT THEORY READYMADE GARMENTS TRADING L.L.C S.O.C supports initiatives that help remove CO₂ from the atmosphere with every purchase.</p>
           </div>
         </div>
       </section>
 
-      {/* Sustainability */}
-      <section id="sustainability" className="border-t border-navy-100 bg-white py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6">
-          <p className="text-center text-xs font-semibold uppercase tracking-wider text-amber-600">Environmental & Social Responsibility</p>
-          <h2 className="mt-1 text-center font-display text-2xl font-bold text-navy-900">Our Commitment to Sustainability</h2>
-          <div className="mt-6 space-y-4 text-sm leading-relaxed text-navy-500">
-            <p>
-              At SportsHub, we believe that business growth should go hand in hand with environmental and social
-              responsibility. We are committed to supporting responsible sourcing, promoting transparency throughout our
-              supply chain, and working with partners who uphold high standards of quality, ethics, and compliance.
-            </p>
-            <p>
-              We continuously seek opportunities to improve operational efficiency, reduce environmental impact, and
-              encourage responsible manufacturing practices wherever possible. Sustainability is an ongoing journey, and
-              we remain committed to making meaningful improvements as our business continues to grow.
-            </p>
-            <p>
-              As part of our commitment to sustainability, OUTFIT THEORY READYMADE GARMENTS TRADING L.L.C S.O.C supports
-              initiatives that help remove CO&#8322; from the atmosphere with every purchase.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="border-t border-navy-100 bg-white py-14">
-        <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
-          <h2 className="font-display text-2xl font-bold text-navy-900">Partner with Sports Hub</h2>
-          <p className="mt-3 text-sm text-navy-500">
-            Whether you're an individual customer or represent a delivery service partner, we're ready to outfit
-            your team.
-          </p>
-          <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link to={ROUTES.PRODUCTS}><Button size="lg">Shop Products</Button></Link>
-            <Link to={ROUTES.REGISTER_VENDOR}><Button variant="outline" size="lg">Register as a DSP</Button></Link>
+      {/* ── CTA ─────────────────────────────────────────────────────────── */}
+      <section className="relative flex min-h-[560px] items-center justify-center overflow-hidden text-white">
+        <img src={IMG.stock} alt="" loading="lazy" className="sh-parallax absolute inset-x-0 -top-16 h-[calc(100%+128px)] w-full object-cover" />
+        <div className="absolute inset-0 bg-navy-ink/75" />
+        <div className="sh-reveal relative flex max-w-2xl flex-col items-center gap-6 px-6 py-20 text-center">
+          <h2 className="font-editorial text-5xl font-semibold leading-none sm:text-7xl">Partner with Sports Hub</h2>
+          <p className="text-lg leading-relaxed text-navy-100">Whether you're an individual customer or represent a delivery service partner, we're ready to outfit your team.</p>
+          <div className="flex w-full flex-col justify-center gap-3.5 sm:w-auto sm:flex-row">
+            <Link to={ROUTES.PRODUCTS} className="btn-transition rounded-full bg-amber px-8 py-4 font-semibold text-navy-900 hover:bg-amber-300">Shop Products</Link>
+            <Link to={ROUTES.REGISTER_VENDOR} className="btn-transition rounded-full border-[1.5px] border-white/45 px-8 py-4 font-semibold hover:bg-white/10">Register as a DSP</Link>
           </div>
         </div>
       </section>

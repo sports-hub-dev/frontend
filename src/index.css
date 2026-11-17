@@ -119,13 +119,13 @@
 @keyframes sh-word { from { opacity: .14; } to { opacity: 1; } }
 @keyframes sh-dim { to { transform: scale(.94); filter: brightness(.7); } }
 @supports (animation-timeline: view()) {
-  .sh-reveal { animation: sh-up linear both; animation-timeline: view(); animation-range: entry 0% cover 28%; }
-  .sh-zoom { animation: sh-zoom linear both; animation-timeline: view(); animation-range: entry 0% cover 55%; }
-  .sh-expand { animation: sh-expand linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+  .sh-reveal { animation-name: sh-up; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: entry 0% cover 28%; }
+  .sh-zoom { animation-name: sh-zoom; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: entry 0% cover 55%; }
+  .sh-expand { animation-name: sh-expand; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
   .sh-quote { view-timeline-name: --shq; }
-  .sh-word { animation: sh-word linear both; animation-timeline: --shq; }
+  .sh-word { animation-name: sh-word; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: --shq; }
   @media (min-width: 768px) {
-    .sh-stackcard { animation: sh-dim linear both; animation-timeline: view(); animation-range: exit 0% exit 80%; }
+    .sh-stackcard { animation-name: sh-dim; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: exit 0% exit 80%; }
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -223,4 +223,78 @@
 .sh-scan { animation: sh-scan 3.4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
   .sh-ring, .sh-ring2, .sh-on, .sh-drop, .sh-scan { animation: none !important; }
+}
+
+/* About */
+@keyframes sh-linek { from { transform: translateY(105%); } to { transform: none; } }
+.sh-mask { display: block; overflow: hidden; }
+.sh-line { animation: sh-linek 1s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes sh-kbk { from { transform: scale(1.15); } to { transform: scale(1); } }
+.sh-kb { animation: sh-kbk 9s ease-out both; }
+.sh-panel { transition: flex-grow .6s cubic-bezier(.2,.7,.2,1); }
+.sh-panel-img { transition: opacity .5s ease; }
+@keyframes sh-fadeink { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.sh-panel-copy, .sh-info { animation: sh-fadeink .5s ease both; }
+.sh-land { transition: fill .4s ease, stroke .4s ease; cursor: pointer; }
+.sh-land:hover { filter: brightness(1.5); }
+@keyframes sh-tw { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.sh-twinkle { animation: sh-tw 3.2s ease-in-out infinite; }
+@keyframes sh-nilek { to { stroke-dashoffset: -30; } }
+.sh-nile { stroke-dasharray: 3 7; animation: sh-nilek 2.4s linear infinite; }
+@keyframes sh-flowk { to { stroke-dashoffset: -96; } }
+.sh-flow { animation: sh-flowk 2.2s linear infinite; }
+@keyframes sh-move { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+.sh-packet { animation: sh-move 3.6s ease-in-out infinite; }
+@keyframes sh-pingc { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
+.sh-ping { transform-box: fill-box; transform-origin: center; animation: sh-pingc 2s ease-out infinite; }
+@keyframes sh-radark { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(7); opacity: 0; } }
+.sh-radar { transform-box: fill-box; transform-origin: center; animation: sh-radark 2.7s ease-out infinite; }
+@keyframes sh-beamk { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+.sh-beam { animation: sh-beamk 2s ease-in-out infinite; }
+@keyframes sh-cardk { from { opacity: 0; transform: translateY(-16px) scale(.96); } to { opacity: 1; transform: none; } }
+.sh-hqcard { animation: sh-cardk .6s cubic-bezier(.2,.7,.2,1) 1.1s both; }
+.sh-sweep { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(100deg, transparent 42%, rgba(90,176,255,.08) 50%, transparent 58%); background-size: 300% 100%; animation: sh-sweepk 7s linear infinite; }
+@keyframes sh-sweepk { from { background-position: 150% 0; } to { background-position: -150% 0; } }
+@keyframes sh-growk { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.sh-grow { transform-origin: left; animation: sh-growk .9s cubic-bezier(.2,.7,.2,1) both; }
+.sh-glass { display: inline-flex; align-items: baseline; gap: 8px; padding: 10px 16px; border-radius: 999px; background: rgba(16,25,44,.72); border: 1px solid rgba(133,149,188,.35); color: #C9D1E0; font-size: 13px; font-weight: 500; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); animation: sh-fadeink .6s ease both; }
+@keyframes sh-livek { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+.sh-dotlive { animation: sh-livek 1.4s ease-in-out infinite; }
+.sh-shot { transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease; box-shadow: 0 24px 50px rgba(0,0,0,.45); }
+.sh-shot img { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.sh-shot:hover, .sh-shot:focus-visible { transform: rotate(0) translateY(-10px) scale(1.03); box-shadow: 0 34px 70px rgba(0,0,0,.6); z-index: 2; }
+.sh-shot:hover img { transform: scale(1.1); }
+@keyframes sh-bubble { 0% { transform: translateY(0) scale(.6); opacity: 0; } 15% { opacity: .8; } 100% { transform: translateY(-520px) scale(1.1); opacity: 0; } }
+.sh-bubble { position: absolute; bottom: -40px; border-radius: 50%; border: 1.5px solid rgba(133,149,188,.45); animation: sh-bubble 9s linear infinite; }
+
+/* Horizontal factory gallery: scrolls sideways while you scroll down (Chrome, Edge).
+   Other browsers get a normal swipeable row. */
+.sh-hs-sticky { position: relative; overflow-x: auto; padding: 90px 0 110px; }
+.sh-hs-track { display: flex; align-items: center; gap: 22px; width: max-content; padding: 0 6vw; }
+.sh-hs-frame img { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.sh-hs-frame:hover img { transform: scale(1.08); }
+.sh-hs-bar { transform-origin: left; }
+@keyframes sh-hsx { from { transform: translateX(0); } to { transform: translateX(calc(-100% + 100vw)); } }
+@keyframes sh-untilt { from { transform: rotateX(32deg) scale(.88); opacity: .35; } to { transform: none; opacity: 1; } }
+@keyframes sh-arcd { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes sh-par { from { transform: translateY(-60px); } to { transform: translateY(60px); } }
+@supports (animation-timeline: view()) {
+  .sh-tilt { transform-origin: 50% 100%; animation-name: sh-untilt; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+  .sh-arcdraw { animation-name: sh-arcd; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: entry 15% cover 50%; }
+  .sh-reel { animation-name: sh-up; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: entry 0% cover 30%; }
+  .sh-draw { transform-origin: left; animation-name: sh-growk; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: entry 20% cover 50%; }
+  .sh-parallax { animation-name: sh-par; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+  @media (min-width: 768px) {
+    .sh-hs { height: 4200px; view-timeline-name: --shhs; }
+    .sh-hs-sticky { position: sticky; top: 64px; height: calc(100vh - 64px); max-height: 820px; overflow: hidden; display: flex; align-items: center; padding: 0; }
+    .sh-hs-track { animation-name: sh-hsx; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: --shhs; animation-range: contain 0% contain 100%; }
+    .sh-hs-bar { animation-name: sh-growk; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: --shhs; animation-range: contain 0% contain 100%; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sh-line, .sh-kb, .sh-panel-copy, .sh-info, .sh-twinkle, .sh-nile, .sh-flow, .sh-packet, .sh-ping, .sh-radar, .sh-beam,
+  .sh-hqcard, .sh-sweep, .sh-grow, .sh-glass, .sh-dotlive, .sh-bubble, .sh-tilt, .sh-arcdraw, .sh-reel, .sh-draw,
+  .sh-parallax, .sh-hs-track, .sh-hs-bar { animation: none !important; }
+  .sh-hs { height: auto !important; }
+  .sh-hs-sticky { position: relative !important; height: auto !important; overflow-x: auto !important; padding: 90px 0 110px !important; }
 }

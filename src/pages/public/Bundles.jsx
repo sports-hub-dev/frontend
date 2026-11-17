@@ -85,7 +85,7 @@ const Bundles = () => {
       <section className="px-6 pb-24 pt-6 sm:px-8">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-12">
           {/* Rider */}
-          <div className="sh-rise relative flex h-[560px] min-w-0 flex-[1_1_420px] items-center justify-center sm:h-[620px]" style={{ "--sh-step": "0.3s" }}>
+          <div className="sh-rise relative flex h-[560px] min-w-0 flex-[1_1_320px] items-center justify-center overflow-hidden sm:h-[620px] sm:overflow-visible" style={{ "--sh-step": "0.3s" }}>
             <div className="absolute aspect-square w-[480px] max-w-full rounded-full bg-navy-900" />
             <div className="sh-ring absolute aspect-square w-[520px] max-w-full rounded-full border-2 border-dashed border-navy-500" />
             <div className="sh-ring2 absolute aspect-square w-[440px] max-w-[92%] rounded-full border border-navy-700 border-r-amber border-t-amber" />
@@ -101,7 +101,7 @@ const Bundles = () => {
           </div>
 
           {/* Real bundles */}
-          <div className="flex min-w-0 flex-[1_1_460px] flex-col gap-4">
+          <div className="flex min-w-0 flex-[1_1_320px] flex-col gap-4">
             {loading &&
               Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-36 w-full rounded-3xl" />)}
 
