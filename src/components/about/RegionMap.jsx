@@ -12,9 +12,9 @@ const COUNTRIES = [
   { k: "eg", name: "Egypt", dsp: true, desc: "Biker & 4-wheeler uniforms, jackets, safety vests and helmets", cap: "Up to 30,000 units annually", pct: 23 },
   { k: "sa", name: "Saudi Arabia", dsp: true, desc: "Scalable production capacity to meet fluctuating demand", cap: "Up to 90,000 units annually", pct: 69 },
   { k: "ae", name: "United Arab Emirates", dsp: true, desc: "Regional inventory pinning for fast, reliable delivery", cap: "Up to 130,000 units annually", pct: 100 },
-  { k: "kw", name: "Kuwait", desc: "[Uniforms and workwear you supply in Kuwait, and for which industries]", cap: "Up to [X] units annually", pct: 0 },
-  { k: "bh", name: "Bahrain", desc: "[Uniforms and workwear you supply in Bahrain, and for which industries]", cap: "Up to [X] units annually", pct: 0 },
-  { k: "qa", name: "Qatar", desc: "[Uniforms and workwear you supply in Qatar, and for which industries]", cap: "Up to [X] units annually", pct: 0 },
+  { k: "kw", name: "Kuwait", desc: "[Uniforms and workwear you supply in Kuwait, and for which industries]" },
+  { k: "bh", name: "Bahrain", desc: "[Uniforms and workwear you supply in Bahrain, and for which industries]" },
+  { k: "qa", name: "Qatar", desc: "[Uniforms and workwear you supply in Qatar, and for which industries]" },
 ];
 
 const SITES = {
@@ -236,10 +236,14 @@ const RegionMap = ({ warehousesOn, onToggleWarehouses }) => {
             )}
           </div>
           <p className="text-base leading-relaxed text-navy-100">{cur.desc}</p>
-          <div className={`h-2.5 overflow-hidden rounded ${cur.pct ? "bg-navy-700" : "border-[1.5px] border-dashed border-navy-500"}`}>
+          {cur.cap && (
+            <>
+          <div className="h-2.5 overflow-hidden rounded bg-navy-700">
             <div className="sh-grow h-full rounded bg-amber" style={{ width: `${cur.pct}%` }} />
           </div>
           <span className="text-[13px] font-bold uppercase tracking-[0.16em] text-amber">{cur.cap}</span>
+            </>
+          )}
           {site && (
             <div className="mt-1.5 flex flex-col gap-3.5 border-t border-navy-700 pt-[18px]">
               <span className="text-[15px] leading-normal"><strong>{site.title}</strong><br />{site.address}</span>

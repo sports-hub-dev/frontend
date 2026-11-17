@@ -177,7 +177,7 @@ const Home = () => {
             Built like performance wear.
           </h1>
           <p className="sh-rise max-w-xl text-base leading-relaxed text-navy-100 sm:text-lg" style={{ "--sh-step": "0.3s" }}>
-            Professional uniforms and PPE for Egypt's delivery and logistics workforce.
+            Uniforms and PPE for delivery partners. Performance wear for everyone else.
           </p>
           <div className="sh-rise flex flex-col gap-3.5 sm:flex-row" style={{ "--sh-step": "0.45s" }}>
             <Link to={ROUTES.PRODUCTS} className="btn-transition rounded-full bg-amber px-8 py-4 text-center text-base font-semibold text-navy-900 hover:-translate-y-0.5 hover:bg-amber-300">
