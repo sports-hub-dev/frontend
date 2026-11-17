@@ -207,3 +207,20 @@
   .sh-track-rev, .sh-float, .sh-float2, .sh-deal { animation: none !important; }
   .sh-pcard:hover { transform: none; }
 }
+
+/* Bundles */
+@keyframes sh-spin { to { transform: rotate(360deg); } }
+.sh-ring { animation: sh-spin 30s linear infinite; }
+.sh-ring2 { animation: sh-spin 18s linear infinite reverse; }
+.sh-piece { transform-box: fill-box; transform-origin: center; transition: fill .35s ease, stroke .35s ease, opacity .35s ease; }
+@keyframes sh-popin { 0% { transform: scale(1.18); filter: brightness(1.8); } 60% { transform: scale(.97); } 100% { transform: scale(1); filter: none; } }
+.sh-on { animation: sh-popin .55s cubic-bezier(.2,.7,.2,1); }
+.sh-preset { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.sh-preset:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(0,0,0,.35); }
+@keyframes sh-dropk { 0% { opacity: 0; transform: translateY(-40px) rotate(-12deg); } 70% { transform: translateY(6px) rotate(4deg); } 100% { opacity: 1; transform: none; } }
+.sh-drop { animation: sh-dropk .7s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes sh-scan { from { transform: translateY(-100%); } to { transform: translateY(420%); } }
+.sh-scan { animation: sh-scan 3.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .sh-ring, .sh-ring2, .sh-on, .sh-drop, .sh-scan { animation: none !important; }
+}
