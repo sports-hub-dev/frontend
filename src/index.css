@@ -132,3 +132,59 @@
   .sh-gate { display: none !important; }
   .sh-rise, .sh-track, .sh-hang, .sh-reveal, .sh-zoom, .sh-expand, .sh-word, .sh-stackcard { animation: none !important; }
 }
+
+/* Track Order */
+@keyframes sh-belt { from { background-position: 0 0; } to { background-position: -80px 0; } }
+.sh-belt { background: repeating-linear-gradient(90deg, #1B2A4A 0 40px, #24365F 40px 80px); animation: sh-belt 1.2s linear infinite; }
+@keyframes sh-box { from { transform: translateX(-140px); } to { transform: translateX(calc(100vw + 140px)); } }
+.sh-box { position: absolute; bottom: 18px; left: 0; animation: sh-box 9s linear infinite; }
+@keyframes sh-fill { from { width: 0; } to { width: var(--to); } }
+.sh-fill { animation: sh-fill 2.2s cubic-bezier(.4,0,.2,1) .2s both; }
+@keyframes sh-truck { from { left: 0; } to { left: var(--to); } }
+.sh-truck { animation: sh-truck 2.2s cubic-bezier(.4,0,.2,1) .2s both; }
+@keyframes sh-wheel { to { transform: rotate(360deg); } }
+.sh-wheel { transform-box: fill-box; transform-origin: center; animation: sh-wheel .5s linear 5; }
+@keyframes sh-node { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.2); } 100% { transform: scale(1); opacity: 1; } }
+.sh-node { animation: sh-node .5s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes sh-ring { 0% { box-shadow: 0 0 0 0 rgba(242,169,59,.6); } 100% { box-shadow: 0 0 0 18px rgba(242,169,59,0); } }
+.sh-current { animation: sh-node .5s cubic-bezier(.2,.7,.2,1) both, sh-ring 1.6s ease-out 2.4s infinite; }
+@keyframes sh-shake { 0%, 100% { transform: none; } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+.sh-shake { animation: sh-shake .4s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .sh-belt, .sh-box, .sh-wheel, .sh-node, .sh-current, .sh-shake { animation: none !important; }
+  .sh-fill { width: var(--to); } .sh-truck { left: var(--to); }
+}
+
+/* Contact */
+.sh-detail { transition: transform .3s cubic-bezier(.2,.7,.2,1), border-color .3s ease, background-color .3s ease; }
+.sh-detail:hover, .sh-detail:focus-visible { transform: translateX(8px); border-color: #F2A93B; background-color: #10192C; }
+.sh-detail .sh-ico { transition: transform .4s cubic-bezier(.2,.7,.2,1), background-color .3s ease, color .3s ease; }
+.sh-detail:hover .sh-ico, .sh-detail:focus-visible .sh-ico { transform: rotate(-12deg) scale(1.1); background-color: #F2A93B; color: #10192C; }
+.sh-fl { position: relative; }
+.sh-fl input, .sh-fl textarea { width: 100%; box-sizing: border-box; border: 1.5px solid #C3CAD6; border-radius: 12px; padding: 24px 16px 10px; font: inherit; font-size: 16px; background: #fff; color: #10192C; transition: border-color .2s ease, box-shadow .2s ease; }
+.sh-fl input { height: 60px; }
+.sh-fl textarea { min-height: 150px; resize: vertical; }
+.sh-fl input:focus, .sh-fl textarea:focus { outline: none; border-color: #F2A93B; box-shadow: 0 0 0 4px rgba(242,169,59,.18); }
+.sh-fl input[aria-invalid="true"], .sh-fl textarea[aria-invalid="true"] { border-color: #C0392B; }
+.sh-fl label { position: absolute; left: 17px; top: 19px; font-size: 16px; color: #5A6680; pointer-events: none; transition: top .2s ease, font-size .2s ease, color .2s ease; }
+.sh-fl input:focus + label, .sh-fl input:not(:placeholder-shown) + label,
+.sh-fl textarea:focus + label, .sh-fl textarea:not(:placeholder-shown) + label { top: 8px; font-size: 12px; color: #8A5A0E; font-weight: 600; }
+@keyframes sh-fly { 0% { transform: translate(0,0) rotate(0); } 30% { transform: translate(-20px,12px) rotate(-8deg); } 100% { transform: translate(420px,-320px) rotate(22deg); opacity: 0; } }
+.sh-plane { animation: sh-fly 1.2s cubic-bezier(.5,0,.3,1) both; }
+@keyframes sh-pop { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+.sh-pop { animation: sh-pop .5s cubic-bezier(.2,.7,.2,1) .9s both; }
+.sh-fadein { animation: sh-rise .6s ease 1.05s both; }
+@keyframes sh-pingk { 0% { transform: scale(.5); opacity: .9; } 100% { transform: scale(3.2); opacity: 0; } }
+.sh-ping-dot { animation: sh-pingk 2.2s ease-out infinite; }
+@keyframes sh-bob { 0%, 100% { transform: translate(-50%,-100%); } 50% { transform: translate(-50%,-112%); } }
+.sh-pin { transform: translate(-50%,-100%); animation: sh-bob 2.4s ease-in-out infinite; }
+@keyframes sh-drive { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+.sh-car { offset-path: path('M0 330 C 220 300, 420 360, 640 280 S 1000 200, 1280 230'); animation: sh-drive 9s linear infinite; }
+.sh-car2 { offset-path: path('M1280 120 C 1000 160, 760 90, 540 170 S 200 210, 0 160'); animation: sh-drive 12s linear infinite; }
+@keyframes sh-wa { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,.55); } 100% { box-shadow: 0 0 0 22px rgba(37,211,102,0); } }
+.sh-wa { animation: sh-wa 1.8s ease-out infinite; transition: transform .2s ease; }
+.sh-wa:hover { transform: scale(1.08); }
+@media (prefers-reduced-motion: reduce) {
+  .sh-plane { display: none; }
+  .sh-pop, .sh-fadein, .sh-ping-dot, .sh-pin, .sh-car, .sh-car2, .sh-wa { animation: none !important; }
+}
