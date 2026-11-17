@@ -57,11 +57,11 @@ const Navbar = () => {
     <header
       className={cn(
         "sticky top-0 z-40 border-b transition-all duration-300",
-        scrolled ? "border-navy-100 bg-white/90 shadow-card backdrop-blur-md" : "border-transparent bg-white"
+        scrolled ? "border-navy-700 bg-navy-ink/90 shadow-lift backdrop-blur-md" : "border-navy-700/60 bg-navy-ink"
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Logo />
+        <Logo variant="white" />
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 md:flex">
@@ -73,7 +73,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 cn(
                   "btn-transition relative rounded-lg px-3.5 py-2 text-sm font-medium",
-                  isActive ? "text-navy-900" : "text-navy-500 hover:text-navy-900"
+                  isActive ? "text-white" : "text-navy-200 hover:text-white"
                 )
               }
             >
@@ -93,7 +93,7 @@ const Navbar = () => {
           {matchedVendor && (
             <NavLink
               to={buildRoute(ROUTES.VENDOR_PRODUCTS, { vendorId: matchedVendor.id })}
-              className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-500 hover:text-navy-900"
+              className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-200 hover:text-white"
             >
               {matchedVendor.name} Uniforms
             </NavLink>
@@ -106,7 +106,7 @@ const Navbar = () => {
           <button
             onClick={() => navigate(ROUTES.CART)}
             aria-label="View cart"
-            className="btn-transition relative rounded-lg p-2.5 text-navy-700 hover:bg-navy-50"
+            className="btn-transition relative rounded-lg p-2.5 text-navy-100 hover:bg-white/10"
           >
             <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
               <path
@@ -126,14 +126,14 @@ const Navbar = () => {
             <div className="relative" ref={menuRef}>
               <button
                 onClick={() => setUserMenuOpen((o) => !o)}
-                className="btn-transition flex items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-3 hover:bg-navy-50"
+                className="btn-transition flex items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-3 hover:bg-white/10"
               >
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-900 text-xs font-semibold text-white">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber text-xs font-semibold text-navy-900">
                   {user?.firstName?.[0]?.toUpperCase()}
                 </span>
-                <span className="hidden text-sm font-medium text-navy-900 sm:block">{user?.firstName}</span>
+                <span className="hidden text-sm font-medium text-white sm:block">{user?.firstName}</span>
                 <svg
-                  className={cn("h-3.5 w-3.5 text-navy-400 transition-transform duration-200", userMenuOpen && "rotate-180")}
+                  className={cn("h-3.5 w-3.5 text-navy-200 transition-transform duration-200", userMenuOpen && "rotate-180")}
                   viewBox="0 0 12 8" fill="none"
                 >
                   <path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="1.6" />
@@ -161,10 +161,10 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="hidden items-center gap-2 sm:flex">
-              <NavLink to={ROUTES.LOGIN} className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-700 hover:bg-navy-50">
+              <NavLink to={ROUTES.LOGIN} className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-100 hover:bg-white/10">
                 Log in
               </NavLink>
-              <NavLink to={ROUTES.REGISTER} className="btn-transition rounded-lg bg-navy-900 px-4 py-2 text-sm font-semibold text-white hover:bg-navy-700">
+              <NavLink to={ROUTES.REGISTER} className="btn-transition rounded-full bg-amber px-5 py-2 text-sm font-semibold text-navy-900 hover:bg-amber-300">
                 Sign up
               </NavLink>
             </div>
@@ -174,7 +174,7 @@ const Navbar = () => {
           <button
             onClick={() => setMobileOpen((o) => !o)}
             aria-label="Toggle menu"
-            className="btn-transition rounded-lg p-2.5 text-navy-700 hover:bg-navy-50 md:hidden"
+            className="btn-transition rounded-lg p-2.5 text-navy-100 hover:bg-white/10 md:hidden"
           >
             <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
               {mobileOpen ? (
@@ -190,8 +190,8 @@ const Navbar = () => {
       {/* Mobile nav panel */}
       <div
         className={cn(
-          "overflow-hidden border-t border-navy-100 bg-white transition-[max-height] duration-300 ease-out md:hidden",
-          mobileOpen ? "max-h-96" : "max-h-0 border-t-0"
+          "overflow-hidden border-t border-navy-700 bg-navy-ink transition-[max-height] duration-300 ease-out md:hidden",
+          mobileOpen ? "max-h-[32rem]" : "max-h-0 border-t-0"
         )}
       >
         <nav className="flex flex-col gap-1 px-4 py-3">
@@ -201,7 +201,7 @@ const Navbar = () => {
               to={link.to}
               end={link.to === ROUTES.HOME}
               className={({ isActive }) =>
-                cn("rounded-lg px-3.5 py-2.5 text-sm font-medium", isActive ? "bg-navy-50 text-navy-900" : "text-navy-600")
+                cn("rounded-lg px-3.5 py-2.5 text-sm font-medium", isActive ? "bg-white/10 text-white" : "text-navy-200")
               }
             >
               {link.label}
@@ -210,17 +210,17 @@ const Navbar = () => {
           {matchedVendor && (
             <NavLink
               to={buildRoute(ROUTES.VENDOR_PRODUCTS, { vendorId: matchedVendor.id })}
-              className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-500 hover:text-navy-900"
+              className="btn-transition rounded-lg px-3.5 py-2 text-sm font-medium text-navy-200 hover:text-white"
             >
               {matchedVendor.name} Uniforms
             </NavLink>
           )}
           {!isAuthenticated && (
-            <div className="mt-2 flex gap-2 border-t border-navy-100 pt-3">
-              <NavLink to={ROUTES.LOGIN} className="flex-1 rounded-lg border border-navy-200 px-3.5 py-2.5 text-center text-sm font-medium text-navy-700">
+            <div className="mt-2 flex gap-2 border-t border-navy-700 pt-3">
+              <NavLink to={ROUTES.LOGIN} className="flex-1 rounded-lg border border-navy-500 px-3.5 py-2.5 text-center text-sm font-medium text-white">
                 Log in
               </NavLink>
-              <NavLink to={ROUTES.REGISTER} className="flex-1 rounded-lg bg-navy-900 px-3.5 py-2.5 text-center text-sm font-semibold text-white">
+              <NavLink to={ROUTES.REGISTER} className="flex-1 rounded-lg bg-amber px-3.5 py-2.5 text-center text-sm font-semibold text-navy-900">
                 Sign up
               </NavLink>
             </div>

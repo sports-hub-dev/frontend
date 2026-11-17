@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 const Footer = () => (
-  <footer className="border-t border-navy-100 bg-navy-900">
+  <footer className="border-t border-navy-700 bg-navy-ink">
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
         <div className="col-span-2 text-center md:col-span-1">
-          <Logo dark className="mb-3 justify-center" />
+          <Logo variant="full" className="mb-4 justify-center" />
           <p className="text-sm leading-relaxed text-navy-300">
             This website and its e-commerce operations are operated by Outfit Theory Readymade Garments Trading L.L.C S.O.C, a company legally registered in the UAE, trading under the Sportshub brand.
           </p>
@@ -45,6 +45,9 @@ const Footer = () => (
             <li>Egypt</li>
             <li>Saudi Arabia</li>
             <li>United Arab Emirates</li>
+            <li>Kuwait</li>
+            <li>Bahrain</li>
+            <li>Qatar</li>
           </ul>
         </div>
       </div>
