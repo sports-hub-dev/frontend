@@ -10,28 +10,31 @@ const ProductCard = ({ product }) => {
   return (
     <Link
       to={buildRoute(ROUTES.PRODUCT_DETAIL, { id: product._id })}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+      className="sh-pcard group flex h-full flex-col overflow-hidden rounded-[22px] border border-navy-100 bg-white"
     >
       <div className="relative aspect-square overflow-hidden bg-navy-50">
         <img
           src={product.mainImage}
           alt={product.name}
           loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          className="sh-pimg h-full w-full object-cover"
         />
+        <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-navy-900">
+          {product.category}
+        </span>
         {!product.isPublic && (
-          <span className="stamp absolute left-3 bottom-3 bg-navy-900/90 text-white backdrop-blur-sm">DSP Only</span>
+          <span className="stamp absolute bottom-3 left-3 bg-navy-900/90 text-white backdrop-blur-sm">DSP Only</span>
         )}
         <div className="absolute right-3 top-3">
           <StockBadge stock={stock} />
         </div>
       </div>
-      <div className="flex flex-1 flex-col p-4">
-        <p className="text-xs font-medium uppercase tracking-wide text-navy-400">{product.category}</p>
-        <h3 className="mt-1 line-clamp-2 min-h-[2.5rem] font-display text-sm font-semibold text-navy-900">
-          {product.name}
-        </h3>
-        <p className="mt-auto pt-2 font-mono text-base font-semibold text-navy-900">{formatPrice(product.price)}</p>
+      <div className="flex flex-1 flex-col gap-2 p-5">
+        <h3 className="line-clamp-2 min-h-[2.75rem] font-editorial text-lg font-semibold leading-snug text-navy-900">{product.name}</h3>
+        <div className="mt-auto flex items-center justify-between gap-2 pt-2">
+          <span className="font-mono text-base font-semibold text-navy-900">{formatPrice(product.price)}</span>
+          <span className="text-[13px] font-semibold text-amber-700 transition-transform duration-300 group-hover:translate-x-1">View →</span>
+        </div>
       </div>
     </Link>
   );
