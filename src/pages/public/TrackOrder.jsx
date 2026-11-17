@@ -76,14 +76,11 @@ const TrackOrder = () => {
           <h3 className="mb-4 text-sm font-semibold text-navy-900">Status Timeline</h3>
           <OrderTimeline timeline={order.timeline} />
 
-          {order.shippingAddress && (
+          {order.shippingAddress?.city && (
             <>
               <div className="manifest-rule my-6" />
-              <h3 className="mb-2 text-sm font-semibold text-navy-900">Shipping Address</h3>
               <p className="text-sm text-navy-600">
-                {order.shippingAddress.fullName} · {order.shippingAddress.phoneNumber}
-                <br />
-                {order.shippingAddress.street}, {order.shippingAddress.area}, {order.shippingAddress.city}
+                Delivering to <span className="font-semibold text-navy-900">{order.shippingAddress.city}</span>
               </p>
             </>
           )}
