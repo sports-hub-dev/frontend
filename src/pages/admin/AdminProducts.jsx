@@ -135,7 +135,12 @@ const AdminProducts = () => {
                         <span className="max-w-[180px] truncate font-medium text-navy-900">{p.name}</span>
                       </td>
                       <td className="px-4 py-3 text-navy-500">{p.category}</td>
-                      <td className="px-4 py-3 font-mono text-navy-900">{formatPrice(p.price)}</td>
+                      <td className="px-4 py-3 font-mono text-navy-900">
+                        {formatPrice(p.price)}
+                        <span className="block text-xs text-navy-400">
+                          {p.prices?.SAR ? formatPrice(p.prices.SAR, "SAR") : "SAR: none"} · {p.prices?.AED ? formatPrice(p.prices.AED, "AED") : "AED: none"}
+                        </span>
+                      </td>
                       <td className="px-4 py-3 text-navy-500">{p.totalStock ?? p.stock}</td>
                       <td className="px-4 py-3">
                         <Badge tone={p.isPublic ? "success" : "neutral"}>{p.isPublic ? "Public" : "Vendor-Only"}</Badge>

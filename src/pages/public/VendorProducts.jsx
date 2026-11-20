@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { productsApi } from "../../api/products.api";
+import { useRegion } from "../../hooks/useRegion";
 import { SPECIAL_VENDORS, getEntityId } from "../../constants/specialVendors";
 import ProductGrid from "../../components/product/ProductGrid";
 
 const VendorProducts = () => {
   const { vendorId } = useParams();
   const [products, setProducts] = useState([]);
+  const { currency } = useRegion();
   const [loading, setLoading] = useState(true);
 
   const vendor = SPECIAL_VENDORS.find((v) => v.id === vendorId);
@@ -14,11 +16,11 @@ const VendorProducts = () => {
   useEffect(() => {
     setLoading(true);
     productsApi
-      .getProducts({ limit: 100 })
+      .getProducts({ limit: 100, currency })
       .then(({ data }) => setProducts(data.data.filter((p) => getEntityId(p.vendorId) === vendorId)))
       .catch(() => setProducts([]))
       .finally(() => setLoading(false));
-  }, [vendorId]);
+  }, [vendorId, currency]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">

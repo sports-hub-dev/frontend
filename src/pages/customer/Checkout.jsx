@@ -15,10 +15,12 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authApi } from "../../api/auth.api";
 import { fetchCurrentUser } from "../../app/authSlice";
+import { useRegion } from "../../hooks/useRegion";
 
+// Paymob only charges EGP, so it is offered for deliveries inside Egypt only.
 const PAYMENT_METHODS = [
-  { value: "paymob", label: "Paymob", desc: "Egyptian Cards, wallets & local payment methods" },
-  { value: "stripe", label: "International Credit / Debit Card", desc: "Secure hosted payment page" },
+  { value: "paymob", label: "Paymob", desc: "Egyptian Cards, wallets & local payment methods", currencies: ["EGP"] },
+  { value: "stripe", label: "International Credit / Debit Card", desc: "Secure hosted payment page", currencies: ["EGP", "SAR", "AED"] },
 ];
 
 // Both gateways are now hosted-redirect flows — build a form and POST for
@@ -46,7 +48,13 @@ const Checkout = () => {
   const { user } = useAuth();
   const { items, promo, clearCart } = useCart();
 
-  const [paymentMethod, setPaymentMethod] = useState("aps");
+  const { region, currency } = useRegion();
+  const methods = PAYMENT_METHODS.filter((m) => m.currencies.includes(currency));
+  const [paymentMethod, setPaymentMethod] = useState(methods[0]?.value);
+  useEffect(() => {
+    if (!methods.some((m) => m.value === paymentMethod)) setPaymentMethod(methods[0]?.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currency]);
   const [placingOrder, setPlacingOrder] = useState(false);
   const [paymentError, setPaymentError] = useState("");
 
@@ -86,7 +94,10 @@ const Checkout = () => {
       email: user.email,
       phone: user.phoneNumber || address.phoneNumber,
     },
-    shippingAddress: address,
+    // The delivery country is the region picked in the header; the server
+    // re-checks that the currency matches it.
+    shippingAddress: { ...address, country: region.name },
+    currency,
     // items: items.map((i) => ({ product: i.productId, quantity: i.quantity, ...(i.size ? { size: i.size } : {}) })),
     items: items.map((i) =>
       i.type === "bundle"
@@ -164,7 +175,13 @@ const Checkout = () => {
         <div className="space-y-6">
           <div className="animate-fadeUp rounded-2xl border border-navy-100 bg-white p-6 shadow-card">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="font-display text-base font-semibold text-navy-900">Shipping Address</h2>
+              <div>
+                <h2 className="font-display text-base font-semibold text-navy-900">Shipping Address</h2>
+                <p className="mt-0.5 text-xs text-navy-400">
+                  Delivering to <span className="font-semibold text-navy-700">{region.name}</span>, charged in {currency}.
+                  Change the region from the top bar.
+                </p>
+              </div>
               <Button type="button" variant="outline" size="sm" onClick={handleSaveAddress} loading={savingAddress}>
                 Save Address
               </Button>
@@ -176,7 +193,7 @@ const Checkout = () => {
             <h2 className="mb-4 font-display text-base font-semibold text-navy-900">Payment</h2>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {PAYMENT_METHODS.map((m) => (
+              {methods.map((m) => (
                 <button
                   key={m.value}
                   type="button"

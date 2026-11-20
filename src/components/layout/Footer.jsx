@@ -60,7 +60,7 @@ const Footer = () => (
           <Link className="transition-colors hover:text-white" to={ROUTES.REFUND_POLICY}>Refund Policy</Link>
         </nav>
         <div className="flex flex-col items-center justify-between gap-3">
-          <span>© {new Date().getFullYear()} Sports Hub. All prices in EGP.</span>
+          <span>© {new Date().getFullYear()} Sports Hub. Prices shown in your region's currency.</span>
           {/* <span className="tracking-code">EG · SA · AE</span> */}
         </div>
       </div>

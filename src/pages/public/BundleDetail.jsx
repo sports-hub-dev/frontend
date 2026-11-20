@@ -3,7 +3,8 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { bundlesApi } from "../../api/bundles.api";
 import { resolveImageUrl } from "../../utils/resolveImageUrl";
-import { formatPrice } from "../../utils/formatPrice";
+import { useRegion } from "../../hooks/useRegion";
+import { bundlePriceIn, bundlePriceMap } from "../../constants/regions";
 import { useAuth } from "../../hooks/useAuth";
 import { useCart } from "../../hooks/useCart";
 import { ROUTES } from "../../constants/routes";
@@ -16,6 +17,7 @@ const BundleDetail = () => {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuth();
     const { addItem } = useCart();
+    const { currency, money, region } = useRegion();
 
     const [bundle, setBundle] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -55,6 +57,7 @@ const BundleDetail = () => {
     }
 
     const sizedComponents = bundle.products.filter((c) => c.product.hasSizeVariants);
+    const { bundlePrice, fullPrice } = bundlePriceIn(bundle, currency);
     const allSizesSelected = sizedComponents.every((c) => selectedSizes[c.product._id]);
 
     const handleAddToCart = () => {
@@ -62,6 +65,7 @@ const BundleDetail = () => {
             navigate(`${ROUTES.LOGIN}?redirect=${encodeURIComponent(`/bundles/${id}`)}`);
             return;
         }
+        if (bundlePrice === null) return;
         if (!allSizesSelected) {
             toast.error("Please select a size for every item that needs one");
             return;
@@ -70,7 +74,8 @@ const BundleDetail = () => {
             bundleId: bundle._id,
             name: bundle.name,
             mainImage: bundle.mainImage,
-            price: bundle.bundlePrice,
+            price: bundlePrice,
+            prices: bundlePriceMap(bundle),
             quantity: 1,
             selections: sizedComponents.map((c) => ({ product: c.product._id, size: selectedSizes[c.product._id] })),
         });
@@ -94,8 +99,14 @@ const BundleDetail = () => {
                     <h1 className="font-display text-2xl font-bold text-navy-900">{bundle.name}</h1>
                     {bundle.description && <p className="mt-2 text-sm text-navy-500">{bundle.description}</p>}
                     <div className="mt-3 flex items-baseline gap-2">
-                        <span className="font-mono text-xl font-bold text-navy-900">{formatPrice(bundle.bundlePrice)}</span>
-                        <span className="font-mono text-sm text-navy-400 line-through">{formatPrice(bundle.fullPrice)}</span>
+                        {bundlePrice === null ? (
+                            <span className="text-sm font-medium text-navy-500">Not sold in {region.name}</span>
+                        ) : (
+                            <>
+                                <span className="font-mono text-xl font-bold text-navy-900">{money(bundlePrice)}</span>
+                                {fullPrice > bundlePrice && <span className="font-mono text-sm text-navy-400 line-through">{money(fullPrice)}</span>}
+                            </>
+                        )}
                         <span className="stamp bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-200">{bundle.discountPercentage}% OFF</span>
                     </div>
 
@@ -128,7 +139,7 @@ const BundleDetail = () => {
                         ))}
                     </div>
 
-                    <Button onClick={handleAddToCart} disabled={!allSizesSelected} size="lg" className="mt-6 w-full">
+                    <Button onClick={handleAddToCart} disabled={!allSizesSelected || bundlePrice === null} size="lg" className="mt-6 w-full">
                         Add Bundle to Cart
                     </Button>
                 </div>

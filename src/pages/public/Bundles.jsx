@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { bundlesApi } from "../../api/bundles.api";
 import { buildRoute, ROUTES } from "../../constants/routes";
 import { formatPrice } from "../../utils/formatPrice";
+import { useRegion } from "../../hooks/useRegion";
+import { bundlePriceIn } from "../../constants/regions";
 import { resolveImageUrl } from "../../utils/resolveImageUrl";
 import Skeleton from "../../components/ui/Skeleton";
 
@@ -48,6 +50,7 @@ const Rider = ({ worn, label }) => {
 
 const Bundles = () => {
   const [bundles, setBundles] = useState([]);
+  const { currency, region } = useRegion();
   const [loading, setLoading] = useState(true);
   const [activeId, setActiveId] = useState(null);
 
@@ -146,8 +149,16 @@ const Bundles = () => {
                     </button>
                     <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">
                       <span className="flex items-baseline gap-2">
-                        <span className="font-mono text-lg font-semibold">{formatPrice(b.bundlePrice)}</span>
-                        {b.fullPrice > b.bundlePrice && <span className="font-mono text-sm text-navy-300 line-through">{formatPrice(b.fullPrice)}</span>}
+                        {bundlePriceIn(b, currency).bundlePrice === null ? (
+                          <span className="text-sm text-navy-300">Not sold in {region.short}</span>
+                        ) : (
+                          <>
+                            <span className="font-mono text-lg font-semibold">{formatPrice(bundlePriceIn(b, currency).bundlePrice, currency)}</span>
+                            {bundlePriceIn(b, currency).fullPrice > bundlePriceIn(b, currency).bundlePrice && (
+                              <span className="font-mono text-sm text-navy-300 line-through">{formatPrice(bundlePriceIn(b, currency).fullPrice, currency)}</span>
+                            )}
+                          </>
+                        )}
                       </span>
                       <Link to={buildRoute(ROUTES.BUNDLE_DETAIL, { id: b._id })} className="btn-transition rounded-full bg-amber px-5 py-2.5 text-sm font-semibold text-navy-900 hover:bg-amber-300">
                         View bundle

@@ -178,7 +178,7 @@ const TrackOrder = () => {
                 </div>
                 <div className="flex flex-col items-start gap-2 sm:items-end">
                   <OrderStatusBadge status={order.status} />
-                  <span className="font-mono text-sm text-navy-500">Total: {formatPrice(order.total)}</span>
+                  <span className="font-mono text-sm text-navy-500">Total: {formatPrice(order.total, order.currency)}</span>
                 </div>
               </div>
 

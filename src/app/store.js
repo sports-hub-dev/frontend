@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer, { setAccessToken, forceLogout } from "./authSlice";
 import cartReducer from "./cartSlice";
+import regionReducer from "./regionSlice";
 import { registerAuthHooks } from "../api/axiosInstance";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     cart: cartReducer,
+    region: regionReducer,
   },
 });
 

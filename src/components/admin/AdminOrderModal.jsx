@@ -53,7 +53,7 @@ const AdminOrderModal = ({ open, onClose, order, onUpdated }) => {
         {order.items?.map((item, i) => (
           <div key={i} className="flex items-center justify-between text-sm">
             <span className="text-navy-600">{item.name} {item.size && `(${item.size})`} × {item.quantity}</span>
-            <span className="font-mono text-navy-900">{formatPrice(item.price * item.quantity)}</span>
+            <span className="font-mono text-navy-900">{formatPrice(item.price * item.quantity, order.currency)}</span>
           </div>
         ))}
       </div>
@@ -62,7 +62,7 @@ const AdminOrderModal = ({ open, onClose, order, onUpdated }) => {
 
       <div className="flex justify-between text-sm font-semibold text-navy-900">
         <span>Total</span>
-        <span className="font-mono">{formatPrice(order.total)}</span>
+        <span className="font-mono">{formatPrice(order.total, order.currency)}</span>
       </div>
 
       <div className="manifest-rule my-4" />

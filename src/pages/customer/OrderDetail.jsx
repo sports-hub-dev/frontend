@@ -100,7 +100,7 @@ const OrderDetail = () => {
                   {item.size && `Size: ${item.size} · `}Qty: {item.quantity}
                 </p>
               </div>
-              <p className="font-mono text-sm font-semibold text-navy-900">{formatPrice(item.price * item.quantity)}</p>
+              <p className="font-mono text-sm font-semibold text-navy-900">{formatPrice(item.price * item.quantity, order.currency)}</p>
             </div>
           ))}
         </div>
@@ -110,21 +110,21 @@ const OrderDetail = () => {
         <div className="space-y-2 text-sm">
           <div className="flex justify-between text-navy-600">
             <span>Subtotal</span>
-            <span className="font-mono">{formatPrice(order.subtotal)}</span>
+            <span className="font-mono">{formatPrice(order.subtotal, order.currency)}</span>
           </div>
           {Boolean(order.discount) && (
             <div className="flex justify-between text-safety-green">
               <span>Discount</span>
-              <span className="font-mono">−{formatPrice(order.discount)}</span>
+              <span className="font-mono">−{formatPrice(order.discount, order.currency)}</span>
             </div>
           )}
           <div className="flex justify-between text-navy-600">
             <span>Shipping</span>
-            <span className="font-mono">{formatPrice(order.shippingFee)}</span>
+            <span className="font-mono">{formatPrice(order.shippingFee, order.currency)}</span>
           </div>
           <div className="flex justify-between pt-2 text-base font-semibold text-navy-900">
             <span>Total</span>
-            <span className="font-mono">{formatPrice(order.total)}</span>
+            <span className="font-mono">{formatPrice(order.total, order.currency)}</span>
           </div>
         </div>
 

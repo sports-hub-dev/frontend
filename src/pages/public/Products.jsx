@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useSearchParams } from "react-router-dom";
 import { productsApi } from "../../api/products.api";
+import { useRegion } from "../../hooks/useRegion";
 import ProductGrid from "../../components/product/ProductGrid";
 import Pagination from "../../components/ui/Pagination";
 import { usePagination } from "../../hooks/usePagination";
@@ -27,6 +28,7 @@ const Products = () => {
   const { page, limit, setPage } = usePagination(12);
 
   const [products, setProducts] = useState([]);
+  const { currency, region } = useRegion();
   const [meta, setMeta] = useState({ totalPages: 1 });
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
@@ -58,7 +60,7 @@ const Products = () => {
   useEffect(() => {
     setLoading(true);
     productsApi
-      .getProducts({ page, limit, category: category || undefined, minPrice: minPrice || undefined, maxPrice: maxPrice || undefined, sort })
+      .getProducts({ page, limit, currency, category: category || undefined, minPrice: minPrice || undefined, maxPrice: maxPrice || undefined, sort })
       .then(({ data }) => {
         setProducts(data.data.filter((p) => !SPECIAL_VENDOR_IDS.includes(getEntityId(p.vendorId))));
         setMeta(data.meta);
@@ -66,7 +68,7 @@ const Products = () => {
       .catch(() => setProducts([]))
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, limit, category, minPrice, maxPrice, sort]);
+  }, [page, limit, category, minPrice, maxPrice, sort, currency]);
 
   const clearFilters = () => setSearchParams(new URLSearchParams());
   const total = meta.total ?? products.length;
@@ -74,7 +76,7 @@ const Products = () => {
 
   const PriceFields = (
     <div>
-      <h4 className="mb-3 text-sm font-semibold text-navy-900">Price Range (EGP)</h4>
+      <h4 className="mb-3 text-sm font-semibold text-navy-900">Price Range ({currency})</h4>
       <div className="flex items-center gap-2">
         <label className="sr-only" htmlFor="min-price">Minimum price</label>
         <input id="min-price" type="number" min="0" placeholder="Min" defaultValue={minPrice} key={`min-${minPrice}`}
@@ -108,7 +110,7 @@ const Products = () => {
               All Products
             </h1>
             <p className="sh-rise max-w-lg text-lg leading-relaxed text-navy-100" style={{ "--sh-step": "0.2s" }}>
-              Uniforms and PPE built for delivery routes, warehouses and the padel court. All prices in EGP.
+              Uniforms and PPE built for delivery routes, warehouses and the padel court. Prices shown in {currency} for {region.name}.
             </p>
           </div>
           <div aria-hidden="true" className="sh-rise relative hidden h-[320px] flex-[0_1_420px] md:block" style={{ "--sh-step": "0.32s" }}>

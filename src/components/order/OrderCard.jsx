@@ -23,7 +23,7 @@ const OrderCard = ({ order }) => (
     </div>
     <div className="manifest-rule mt-4 flex items-center justify-between pt-4">
       <span className="text-sm text-navy-500">Total</span>
-      <span className="font-mono text-base font-semibold text-navy-900">{formatPrice(order.total)}</span>
+      <span className="font-mono text-base font-semibold text-navy-900">{formatPrice(order.total, order.currency)}</span>
     </div>
   </Link>
 );

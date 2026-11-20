@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { setRegion } from "./regionSlice";
+import { getRegion } from "../constants/regions";
 
 const CART_STORAGE_KEY = "sportshub_cart";
 
@@ -27,7 +29,9 @@ const findIndex = (items, { type, productId, bundleId, size }) =>
   });
 
 const initialState = {
+  // Each line keeps `prices` ({EGP, SAR, AED}) so switching region re-prices it.
   items: loadCart(),
+  removedOnRegionChange: [],
   promo: null,
 };
 
@@ -36,7 +40,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      const { productId, bundleId, name, mainImage, size, price, quantity, selections } = action.payload;
+      const { productId, bundleId, name, mainImage, size, price, prices, quantity, selections } = action.payload;
       const type = bundleId ? "bundle" : "product";
       const idx = findIndex(state.items, { type, productId, bundleId, size });
       if (idx > -1) {
@@ -51,6 +55,7 @@ const cartSlice = createSlice({
           size: type === "product" ? size || null : null,
           selections: type === "bundle" ? selections || [] : undefined,
           price,
+          prices: prices || null,
           quantity,
         });
       }
@@ -87,10 +92,32 @@ const cartSlice = createSlice({
     clearPromo(state) {
       state.promo = null;
     },
+    dismissRemovedNotice(state) {
+      state.removedOnRegionChange = [];
+    },
+  },
+  extraReducers: (builder) => {
+    // New region = new currency: re-price every line, and drop the ones that
+    // aren't sold in that region (or old lines saved before prices were stored).
+    builder.addCase(setRegion, (state, action) => {
+      const country = typeof action.payload === "string" ? action.payload : action.payload.country;
+      const currency = getRegion(country).currency;
+      const kept = [];
+      const removed = [];
+      state.items.forEach((item) => {
+        const price = item.prices ? item.prices[currency] : currency === "EGP" ? item.price : null;
+        if (typeof price === "number" && price > 0) kept.push({ ...item, price });
+        else removed.push(item.name);
+      });
+      state.items = kept;
+      state.removedOnRegionChange = removed;
+      if (removed.length || kept.length === 0) state.promo = null;
+      persistCart(kept);
+    });
   },
 });
 
-export const { addItem, updateQuantity, removeItem, clearCart, setPromo, clearPromo } = cartSlice.actions;
+export const { addItem, updateQuantity, removeItem, clearCart, setPromo, clearPromo, dismissRemovedNotice } = cartSlice.actions;
 
 export const selectCartItems = (state) => state.cart.items;
 export const selectCartSubtotal = (state) =>

@@ -13,6 +13,8 @@ import Button from "../../components/ui/Button";
 import Skeleton from "../../components/ui/Skeleton";
 import AuthCard from "./AuthCard";
 import TurnstileWidget from "../../components/ui/TurnstileWidget";
+import { REGIONS } from "../../constants/regions";
+import { useRegion } from "../../hooks/useRegion";
 
 /**
  * Any active, approved vendor/DSP company the backend returns from
@@ -27,6 +29,7 @@ const RegisterVendor = () => {
   const [turnstileToken, setTurnstileToken] = useState("");
   const handleVerify = useCallback((token) => setTurnstileToken(token), []);
   const handleExpire = useCallback(() => setTurnstileToken(""), []);
+  const { country: currentRegion } = useRegion();
 
   const {
     register,
@@ -34,7 +37,7 @@ const RegisterVendor = () => {
     control,
     setError,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(vendorRegisterSchema) });
+  } = useForm({ resolver: yupResolver(vendorRegisterSchema), defaultValues: { country: currentRegion } });
 
   useEffect(() => {
     vendorsApi
@@ -134,6 +137,33 @@ const RegisterVendor = () => {
             )}
           />
         )}
+
+        <div className="rounded-xl border border-navy-100 p-4">
+          <p className="mb-3 text-sm font-semibold text-navy-900">DSP details</p>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <Input label="DSP shortcode" placeholder="e.g. ABCD" className="uppercase" error={errors.dspShortcode?.message} {...register("dspShortcode")} />
+              <Input label="Station" placeholder="e.g. DXB1" className="uppercase" error={errors.station?.message} {...register("station")} />
+            </div>
+            <Input label="Company name" placeholder="Registered company name" error={errors.companyName?.message} {...register("companyName")} />
+            <div className="grid grid-cols-2 gap-3">
+              <Input label="VAT ID" error={errors.vatId?.message} {...register("vatId")} />
+              <Controller
+                name="country"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="Country"
+                    options={REGIONS.map((r) => ({ value: r.code, label: r.name }))}
+                    error={errors.country?.message}
+                    {...field}
+                  />
+                )}
+              />
+            </div>
+            <p className="text-xs text-navy-400">Your country sets the currency you see prices in.</p>
+          </div>
+        </div>
 
         <TurnstileWidget onVerify={handleVerify} onExpire={handleExpire} />
 

@@ -96,7 +96,7 @@ const AdminOrders = () => {
                       <td className="tracking-code px-4 py-3 font-medium text-navy-900">{formatOrderNumber(o.orderNumber)}</td>
                       <td className="px-4 py-3 text-navy-600">{o.customerInfo?.name}</td>
                       <td className="px-4 py-3 text-navy-500">{formatDate(o.createdAt)}</td>
-                      <td className="px-4 py-3 font-mono text-navy-900">{formatPrice(o.total)}</td>
+                      <td className="px-4 py-3 font-mono text-navy-900">{formatPrice(o.total, o.currency)}</td>
                       <td className="px-4 py-3"><PaymentStatusBadge status={o.paymentStatus} /></td>
                       <td className="px-4 py-3"><OrderStatusBadge status={o.status} /></td>
                       <td className="px-4 py-3">{o.vendorId ? <Badge>{o.vendorId.name}</Badge> : <span className="text-navy-300">—</span>}</td>
@@ -116,7 +116,7 @@ const AdminOrders = () => {
               >
                 <div className="flex items-center justify-between">
                   <span className="tracking-code text-sm font-semibold text-navy-900">{formatOrderNumber(o.orderNumber)}</span>
-                  <span className="font-mono text-sm text-navy-900">{formatPrice(o.total)}</span>
+                  <span className="font-mono text-sm text-navy-900">{formatPrice(o.total, o.currency)}</span>
                 </div>
                 <p className="mt-1 text-xs text-navy-400">{o.customerInfo?.name} · {formatDate(o.createdAt)}</p>
                 <div className="mt-2 flex flex-wrap gap-1.5">

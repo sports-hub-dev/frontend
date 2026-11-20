@@ -3,7 +3,8 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { productsApi } from "../../api/products.api";
 import { ROUTES, buildRoute } from "../../constants/routes";
-import { formatPrice } from "../../utils/formatPrice";
+import { useRegion } from "../../hooks/useRegion";
+import { productPriceIn, productPriceMap } from "../../constants/regions";
 import { useAuth } from "../../hooks/useAuth";
 import { useCart } from "../../hooks/useCart";
 import StockBadge from "../../components/product/StockBadge";
@@ -16,6 +17,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
   const { addItem } = useCart();
+  const { currency, money, region } = useRegion();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -49,12 +51,13 @@ const ProductDetail = () => {
   const userVendorId = getId(user?.vendorId);
 
   const isVendorRestricted = Boolean(productVendorId) && productVendorId !== userVendorId;
+  const price = productPriceIn(product, currency);
   const handleAddToCart = () => {
     if (!isAuthenticated) {
       navigate(`${ROUTES.LOGIN}?redirect=${encodeURIComponent(buildRoute(ROUTES.PRODUCT_DETAIL, { id }))}`);
       return;
     }
-    if (isVendorRestricted) return; // extra safety net alongside the disabled button
+    if (isVendorRestricted || price === null) return; // extra safety net alongside the disabled button
     if (product.hasSizeVariants && !selectedSize) {
       toast.error("Please select a size");
       return;
@@ -64,7 +67,8 @@ const ProductDetail = () => {
       name: product.name,
       mainImage: product.mainImage,
       size: selectedSize,
-      price: product.price,
+      price: productPriceIn(product, currency),
+      prices: productPriceMap(product),
       quantity,
     });
     toast.success("Added to cart");
@@ -134,7 +138,11 @@ const ProductDetail = () => {
           <p className="text-xs font-semibold uppercase tracking-wide text-amber-600">{product.category}</p>
           <h1 className="mt-2 font-display text-2xl font-bold text-navy-900 sm:text-3xl">{product.name}</h1>
           <div className="mt-4 flex items-center gap-3">
-            <span className="font-mono text-2xl font-bold text-navy-900">{formatPrice(product.price)}</span>
+            {price === null ? (
+              <span className="text-sm font-medium text-navy-500">Not sold in {region.name}</span>
+            ) : (
+              <span className="font-mono text-2xl font-bold text-navy-900">{money(price)}</span>
+            )}
             <StockBadge stock={availableStock} />
           </div>
 
@@ -167,11 +175,11 @@ const ProductDetail = () => {
               </div>
               <Button
                 onClick={handleAddToCart}
-                disabled={availableStock <= 0 || (product.hasSizeVariants && !selectedSize) || isVendorRestricted}
+                disabled={availableStock <= 0 || (product.hasSizeVariants && !selectedSize) || isVendorRestricted || price === null}
                 size="lg"
                 className="flex-1"
               >
-                {isVendorRestricted ? "Not Available to You" : availableStock <= 0 ? "Out of Stock" : "Add to Cart"}
+                {isVendorRestricted ? "Not Available to You" : price === null ? `Not sold in ${region.short}` : availableStock <= 0 ? "Out of Stock" : "Add to Cart"}
               </Button>
               
             </div>

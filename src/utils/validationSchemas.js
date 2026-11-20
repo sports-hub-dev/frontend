@@ -25,4 +25,14 @@ export const customerRegisterSchema = yup.object(baseRegisterSchema);
 export const vendorRegisterSchema = yup.object({
   ...baseRegisterSchema,
   vendorId: yup.string().required("Please select your DSP / vendor company"),
+  dspShortcode: yup
+    .string()
+    .trim()
+    .required("DSP shortcode is required")
+    .max(20, "Too long")
+    .matches(/^[A-Za-z0-9-]+$/, "Letters, numbers and dashes only"),
+  companyName: yup.string().trim().required("Company name is required").max(150, "Too long"),
+  station: yup.string().trim().required("Station is required").max(30, "Too long"),
+  vatId: yup.string().trim().required("VAT ID is required").max(40, "Too long"),
+  country: yup.string().oneOf(["EG", "SA", "AE"], "Select a country").required("Select a country"),
 });

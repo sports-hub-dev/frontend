@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { buildRoute, ROUTES } from "../../constants/routes";
-import { formatPrice } from "../../utils/formatPrice";
+import { useRegion } from "../../hooks/useRegion";
+import { productPriceIn } from "../../constants/regions";
 import StockBadge from "./StockBadge";
 
 const ProductCard = ({ product }) => {
   const stock = product.totalStock ?? product.stock ?? 0;
+  const { currency, money } = useRegion();
+  const price = productPriceIn(product, currency);
 
   return (
     <Link
@@ -32,7 +35,11 @@ const ProductCard = ({ product }) => {
       <div className="flex flex-1 flex-col gap-2 p-5">
         <h3 className="line-clamp-2 min-h-[2.75rem] font-editorial text-lg font-semibold leading-snug text-navy-900">{product.name}</h3>
         <div className="mt-auto flex items-center justify-between gap-2 pt-2">
-          <span className="font-mono text-base font-semibold text-navy-900">{formatPrice(product.price)}</span>
+          {price === null ? (
+            <span className="text-xs font-medium text-navy-400">Not sold in your region</span>
+          ) : (
+            <span className="font-mono text-base font-semibold text-navy-900">{money(price)}</span>
+          )}
           <span className="text-[13px] font-semibold text-amber-700 transition-transform duration-300 group-hover:translate-x-1">View →</span>
         </div>
       </div>

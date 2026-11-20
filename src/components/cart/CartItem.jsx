@@ -1,10 +1,11 @@
 import React from "react";
-import { formatPrice } from "../../utils/formatPrice";
+import { useRegion } from "../../hooks/useRegion";
 import { resolveImageUrl } from "../../utils/resolveImageUrl";
 import { useCart } from "../../hooks/useCart";
 
 const CartItem = ({ item }) => {
   const { updateQuantity, removeItem } = useCart();
+  const { money } = useRegion();
   const idPayload = item.type === "bundle" ? { bundleId: item.bundleId } : { productId: item.productId, size: item.size };
 
   return (
@@ -20,7 +21,7 @@ const CartItem = ({ item }) => {
               )}
             </div>
             {item.size && <p className="mt-0.5 text-xs text-navy-400">Size: {item.size}</p>}
-            <p className="mt-1 font-mono text-sm text-navy-700">{formatPrice(item.price)}</p>
+            <p className="mt-1 font-mono text-sm text-navy-700">{money(item.price)}</p>
           </div>
           <button
             onClick={() => removeItem(idPayload)}

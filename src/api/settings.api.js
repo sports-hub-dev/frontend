@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 
 export const settingsApi = {
-  getShippingFee: () => axiosInstance.get("/settings/shipping-fee"),
+  getShippingFee: (params) => axiosInstance.get("/settings/shipping-fee", { params }),
 
   // Admin
   getAllSettings: () => axiosInstance.get("/settings"),

@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useCart } from "../../hooks/useCart";
 import { cn } from "../../utils/cn";
 import Logo from "./Logo";
+import RegionSelector from "./RegionSelector";
 import toast from "react-hot-toast";
 import { SPECIAL_VENDORS, getEntityId } from "../../constants/specialVendors";
 import { buildRoute } from "../../constants/routes";
@@ -101,7 +102,8 @@ const Navbar = () => {
 
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
+          <RegionSelector />
           {/* Cart */}
           <button
             onClick={() => navigate(ROUTES.CART)}

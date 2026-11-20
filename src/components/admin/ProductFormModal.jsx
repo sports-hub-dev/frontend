@@ -14,6 +14,8 @@ const emptyForm = {
   name: "",
   description: "",
   price: "",
+  priceSAR: "",
+  priceAED: "",
   category: "",
   isPublic: true,
   vendorId: "",
@@ -42,6 +44,8 @@ const ProductFormModal = ({ open, onClose, product, onSaved }) => {
               name: product.name,
               description: product.description,
               price: product.price,
+              priceSAR: product.prices?.SAR ?? "",
+              priceAED: product.prices?.AED ?? "",
               category: product.category,
               isPublic: product.isPublic,
               vendorId: product.vendorId?._id || product.vendorId || "",
@@ -62,6 +66,9 @@ const ProductFormModal = ({ open, onClose, product, onSaved }) => {
       formData.append("name", values.name);
       formData.append("description", values.description);
       formData.append("price", values.price);
+      // Empty = not sold in that country
+      formData.append("priceSAR", values.priceSAR ?? "");
+      formData.append("priceAED", values.priceAED ?? "");
       formData.append("category", values.category);
       formData.append("isPublic", values.isPublic);
       if (!values.isPublic && values.vendorId) formData.append("vendorId", values.vendorId);
@@ -103,6 +110,11 @@ const ProductFormModal = ({ open, onClose, product, onSaved }) => {
           <Input label="Price (EGP)" type="number" step="0.01" min="0" error={errors.price?.message} {...register("price", { required: "Price is required" })} />
           <Input label="Category" error={errors.category?.message} {...register("category", { required: "Category is required" })} />
         </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Input label="Price (SAR)" type="number" step="0.01" min="0" placeholder="Not sold in KSA" {...register("priceSAR")} />
+          <Input label="Price (AED)" type="number" step="0.01" min="0" placeholder="Not sold in UAE" {...register("priceAED")} />
+        </div>
+        <p className="-mt-2 text-xs text-navy-400">Leave SAR or AED empty to hide this product from that region.</p>
 
         <div>
           <label className="mb-1.5 block text-sm font-medium text-navy-900">Main Image {product && "(leave blank to keep current)"}</label>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getRegion } from "../../constants/regions";
 import toast from "react-hot-toast";
 import { adminApi } from "../../api/admin.api";
 import { vendorsApi } from "../../api/vendors.api";
@@ -19,6 +20,28 @@ const TABS = [
   { id: "all", label: "All Users" },
   { id: "pending", label: "Pending Vendor Users" },
 ];
+
+// DSP details entered at registration, so the admin can check them before approving.
+const DspDetails = ({ dsp, country }) => {
+  if (!dsp || !(dsp.shortcode || dsp.companyName || dsp.station || dsp.vatId)) return null;
+  const rows = [
+    ["Shortcode", dsp.shortcode],
+    ["Company", dsp.companyName],
+    ["Station", dsp.station],
+    ["VAT ID", dsp.vatId],
+    ["Country", getRegion(country).name],
+  ];
+  return (
+    <dl className="mt-1.5 grid grid-cols-[auto_1fr] gap-x-2 gap-y-0.5 text-xs">
+      {rows.map(([k, v]) => (
+        <React.Fragment key={k}>
+          <dt className="text-navy-400">{k}</dt>
+          <dd className="font-mono text-navy-700">{v || "—"}</dd>
+        </React.Fragment>
+      ))}
+    </dl>
+  );
+};
 
 const AdminUsers = () => {
   const [tab, setTab] = useState("all");
@@ -150,7 +173,10 @@ const AdminUsers = () => {
                       <td className="px-4 py-3 font-medium text-navy-900">{u.firstName} {u.lastName}</td>
                       <td className="px-4 py-3 text-navy-500">{u.email}</td>
                       <td className="px-4 py-3"><Badge tone={u.role === "admin" ? "warning" : "neutral"}>{u.role}</Badge></td>
-                      <td className="px-4 py-3 text-navy-500">{u.vendorId?.name || "—"}</td>
+                      <td className="px-4 py-3 text-navy-500">
+                        {u.vendorId?.name || "—"}
+                        <DspDetails dsp={u.dsp} country={u.country} />
+                      </td>
                       <td className="px-4 py-3">
                         {u.vendorId ? <Badge tone={u.isApproved ? "success" : "warning"}>{u.isApproved ? "Approved" : "Pending"}</Badge> : <span className="text-navy-300">N/A</span>}
                       </td>
@@ -182,6 +208,8 @@ const AdminUsers = () => {
               <div key={u._id} className="rounded-2xl border border-navy-100 bg-white p-4 shadow-card">
                 <p className="text-sm font-semibold text-navy-900">{u.firstName} {u.lastName}</p>
                 <p className="text-xs text-navy-400">{u.email}</p>
+                {u.vendorId && <p className="mt-1 text-xs text-navy-500">{u.vendorId?.name}</p>}
+                <DspDetails dsp={u.dsp} country={u.country} />
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   <Badge tone={u.role === "admin" ? "warning" : "neutral"}>{u.role}</Badge>
                   {u.vendorId && <Badge tone={u.isApproved ? "success" : "warning"}>{u.isApproved ? "Approved" : "Pending"}</Badge>}
